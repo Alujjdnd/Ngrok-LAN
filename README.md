@@ -2,6 +2,8 @@
 ![GitHub](https://img.shields.io/github/license/Alujjdnd/Ngrok-Lan)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Alujjdnd/Ngrok-Lan)
 
+![AGPL V3](https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/AGPL-v3.png)
+
 ## Dependencies
 The mod requires the following mods:
 - [Fabric Loader & Fabric API](https://fabricmc.net/)
