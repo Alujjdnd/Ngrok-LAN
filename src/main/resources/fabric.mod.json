@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "ngroklan",
+  "version": "${version}",
+
+  "name": "Ngrok LAN",
+  "description": "Exposes your local LAN server to the internet with Ngrok.",
+  "authors": [
+    "Peter Zhang (alujjdnd)"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/FabricMC/fabric-example-mod"
+  },
+
+  "license": "MIT",
+  "icon": "assets/ngroklan/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "alujjdnd.ngrok.lan.NgrokLan"
+    ],
+    
+    "modmenu": [ 
+      "alujjdnd.ngrok.lan.config.ModMenuIntegration"
+    ]
+  },
+
+  "mixins": [
+    "ngroklan.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
