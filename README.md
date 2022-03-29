@@ -23,4 +23,4 @@ hitch
 - Add meta description for CurseForge and ModMenu information
 
 ## License
-This template is available under the GNU GPL 3.0 license.
+This template is available under the GNU AGPL-3.0 license.
