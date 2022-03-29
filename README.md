@@ -1,4 +1,5 @@
 # Ngrok Lan (Fabric)
+![GitHub](https://img.shields.io/github/license/Alujjdnd/Ngrok-Lan)
 
 ## Temp Docs
 - Will hitch a bit for now, especially on first load.
