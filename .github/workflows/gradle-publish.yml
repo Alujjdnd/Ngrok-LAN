@@ -9,6 +9,7 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
+          cache: 'gradle'
       - name: Build with Gradle
         run: ./gradlew build
       - name: Use the Upload Artifact GitHub Action
