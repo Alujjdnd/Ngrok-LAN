@@ -1,5 +1,12 @@
 # Ngrok Lan (Fabric)
 ![GitHub](https://img.shields.io/github/license/Alujjdnd/Ngrok-Lan)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/Alujjdnd/Ngrok-Lan)
+
+## Dependencies
+The mod requires the following mods:
+- [Fabric Loader & Fabric API](https://fabricmc.net/)
+- [ClothConfig API](https://www.curseforge.com/minecraft/mc-mods/cloth-config)
+- [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu)
 
 ## Temp Docs
 - Will hitch a bit for now, especially on first load.
@@ -10,6 +17,8 @@
 hitch
 - Print exception log to chat to diagnose issues
 - Add common issues with Ngrok
+- Add ModRinth and CurseForge integration
+- Add meta description for CurseForge and ModMenu information
 
 ## License
 This template is available under the GNU GPL 3.0 license.
