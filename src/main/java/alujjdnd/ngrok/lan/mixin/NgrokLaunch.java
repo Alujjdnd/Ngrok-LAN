@@ -26,7 +26,16 @@ import net.minecraft.world.GameMode;
 
 import net.minecraft.text.LiteralText;
 
+import java.io.File;  // Import the File class
+import java.io.IOException;  // Import the IOException class to handle errors
+import java.io.FileWriter;   // Import the FileWriter class
+import java.io.IOException;  // Import the IOException class to handle errors
+import java.util.*;
+import java.text.*;
+
 @Mixin(IntegratedServer.class)
+
+
 public class NgrokLaunch {
 
     // Reads the NLangConfig (ClothConfig) fields in the ModMenu, stores it under "config.<something>"
@@ -34,6 +43,24 @@ public class NgrokLaunch {
 
     //MC Client Configuration, for printing in chat
     MinecraftClient mc = MinecraftClient.getInstance();
+
+    // Method to write to an error log with a timestamped name (NOT USED)
+    //    private void writeErrorLog(String errorString) {
+    //
+    //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-kk-mm-ss");
+    //        Date timestamp = new Date();
+    //        String timeStampString = dateFormat.format(timestamp);
+    //
+    //        try {
+    //            FileWriter myWriter = new FileWriter("NgrokLAN-" + timeStampString + ".txt");
+    //            myWriter.write("Files in Java might be tricky, but it is fun enough!");
+    //            myWriter.close();
+    //            mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a76Error logged under crash."));
+    //        } catch (IOException e) {
+    //            System.out.println("An error occurred.");
+    //            e.printStackTrace();
+    //        }
+    //    }
 
     private void ngrokInit(int port, Region region){
 
@@ -72,10 +99,11 @@ public class NgrokLaunch {
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
                     mc.keyboard.setClipboard(ngrok_url);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                } catch (Exception error) {
+                    error.printStackTrace();
 
                     // Notify user of unsuccessful tunnel initiations
+                    mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
                 }
             }
