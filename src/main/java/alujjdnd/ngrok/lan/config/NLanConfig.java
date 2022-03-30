@@ -8,5 +8,11 @@ public class NLanConfig implements ConfigData
 {
     public boolean enabledCheckBox = true;
     public String authToken = "AuthToken";
-    
+
+    public enum regionSelectEnum {
+        US, EU, AP, AU, SA, JP, IN
+    }
+
+    public regionSelectEnum regionSelect = regionSelectEnum.US;
+
 }

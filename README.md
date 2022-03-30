@@ -14,7 +14,7 @@ The mod requires the following mods:
 - Will hitch a bit for now, especially on first load.
 
 ## TODO
-- Add ModMenu integration to ~~input Auth Token~~, Enabled checkbox, and Ngrok region select dropdown
+- Add ModMenu integration to ~~input Auth Token~~, ~~Enabled checkbox~~, and ~~Ngrok region select~~ dropdown
 - See if can make process parallel, so that the "Open to LAN" button doesn't 
 hitch
 - Print exception log to chat to diagnose issues
