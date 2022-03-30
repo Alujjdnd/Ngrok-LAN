@@ -32,42 +32,54 @@ public class NgrokLaunch {
     private void onOpenToLan(GameMode gameMode, boolean cheatsAllowed, int port, CallbackInfoReturnable<Boolean> cir)
     {
 
-    try{    
-        NgrokLan.LOGGER.info("Launched Lan!");
-
+        // Reads the NLangConfig (ClothConfig) fields in the ModMenu, stores it under "config.<something>"
         NLanConfig config = AutoConfig.getConfigHolder(NLanConfig.class).getConfig();
-        final JavaNgrokConfig javaNgrokConfig = new JavaNgrokConfig.Builder()
-                    .withAuthToken(config.authToken)
-                    .withRegion(Region.AP)
-                    .build();
-        
-        final NgrokClient ngrokClient = new NgrokClient.Builder()
-                    .withJavaNgrokConfig(javaNgrokConfig)
-                    .build();
 
-        final CreateTunnel createTunnel = new CreateTunnel.Builder()
-                    .withProto(Proto.TCP)
-                    .withAddr(port)
-                    .build();
-
-        final Tunnel tunnel = ngrokClient.connect(createTunnel);
-
-
-        NgrokLan.LOGGER.info(tunnel.getPublicUrl());
-
-        var ngrok_url = tunnel.getPublicUrl().substring(6);
-
+        //MC Client Configuration, for printing in chat
         MinecraftClient mc = MinecraftClient.getInstance();
-        mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
-        mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
-        mc.keyboard.setClipboard(ngrok_url);
-    }
-    catch (Exception e)
-    {
-        e.printStackTrace();
-        MinecraftClient mc = MinecraftClient.getInstance();
-        mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiated Failed!"));
-    }
+
+        // Check if mod is enabled in the ModMenu
+        if (config.enabledCheckBox == true) {
+            try{
+                NgrokLan.LOGGER.info("Launched Lan!");
+
+
+                final JavaNgrokConfig javaNgrokConfig = new JavaNgrokConfig.Builder()
+                        .withAuthToken(config.authToken)
+                        .withRegion(Region.AP)
+                        .build();
+
+                final NgrokClient ngrokClient = new NgrokClient.Builder()
+                        .withJavaNgrokConfig(javaNgrokConfig)
+                        .build();
+
+                final CreateTunnel createTunnel = new CreateTunnel.Builder()
+                        .withProto(Proto.TCP)
+                        .withAddr(port)
+                        .build();
+
+                final Tunnel tunnel = ngrokClient.connect(createTunnel);
+
+
+                NgrokLan.LOGGER.info(tunnel.getPublicUrl());
+
+                var ngrok_url = tunnel.getPublicUrl().substring(6);
+
+                mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
+                mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
+                mc.keyboard.setClipboard(ngrok_url);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+
+                mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
+            }
+        } else {
+            mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a76Ngrok LAN Disabled."));
+        }
+
+
     }
 }
 
