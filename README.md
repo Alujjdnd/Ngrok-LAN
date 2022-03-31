@@ -7,6 +7,9 @@
 <div align="center">
   <img alt="License" src=https://img.shields.io/github/license/Alujjdnd/Ngrok-LAN>
   <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Alujjdnd/Ngrok-LAN">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/Alujjdnd/Ngrok-LAN">
+  <a href="https://www.codacy.com/gh/Alujjdnd/Ngrok-LAN/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Alujjdnd/Ngrok-LAN&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/b38f7148f2934ad8b6d4413b70a173fd"/></a>
+  <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/alujjdnd/ngrok-lan">
   </br>
   <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
