@@ -112,11 +112,11 @@ modrinth {
 	]
 }
 
-curseforge {
-	apiKey = System.getenv("CURSEFORGE_TOKEN") // This should really be in a gradle.properties file
-	project {
-		id = '602252'
-		changelog = 'Added content and fixed bugs' // A file can also be set using: changelog = file('changelog.txt')
-		releaseType = 'release'
-	}
-}
+//curseforge {
+//	apiKey = System.getenv("CURSEFORGE_TOKEN") // This should really be in a gradle.properties file
+//	project {
+//		id = '602252'
+//		changelog = 'Added content and fixed bugs' // A file can also be set using: changelog = file('changelog.txt')
+//		releaseType = 'release'
+//	}
+//}
