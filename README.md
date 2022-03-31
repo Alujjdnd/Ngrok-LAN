@@ -52,7 +52,7 @@ The mod requires the following mods:
 2. Open a new singleplayer world, and click on Open to LAN
 3. Configure the game mode and whether to allow cheats
 4. Press on "Start LAN World"
-5. The game may freeze for a moment (especially on your first time using the mod), but if all goes well, the message "Ngrok service initiated successfully" should appear in chat, with a link highlighted in yellow
+5. The message "Ngrok service initiated successfully" should appear in chat, with a link highlighted in yellow
    - If not, check [common issues](#common-issues) below
 7. The link is automatically copied to your clipboard, and can now be shared with your friends
 8. Other people just need to put this as a server IP into their multiplayer list, and join the world
