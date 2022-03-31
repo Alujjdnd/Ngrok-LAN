@@ -29,9 +29,9 @@ The mod requires the following mods:
 
 ## Configuring Ngrok-LAN
 In your Minecraft menu screen, a new "Mods" button should be visible, click on it. In the list of mods on the left hand side, find Ngrok LAN, and click on the sliders button on the top right corner, above the "issues" button. You should be presented with a few options:
-- "Enabled?": This will enable/disable the mod, so you can configure whether the world is shared with Ngrok
-- "Ngrok Auth Token": This is the field to input your Ngrok auth token
-- "Region": This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency
+- **"Enabled?"**: This will enable/disable the mod, so you can configure whether the world is shared with Ngrok
+- **"Ngrok Auth Token"**: This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)
+- **"Region"**: This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency
 
 ## Starting Ngrok LAN
 1. Make sure that Ngrok LAN is enabled, the auth token is valid, and the correct region is selected
@@ -39,20 +39,31 @@ In your Minecraft menu screen, a new "Mods" button should be visible, click on i
 3. Configure the game mode and whether to allow cheats
 4. Press on "Start LAN World"
 5. The game may freeze for a moment (especially on your first time using the mod), but if all goes well, the message "Ngrok service initiated successfully" should appear in chat, with a link highlighted in yellow
-6. The link is automatically copied to your clipboard, and can now be shared with your friends
-7. Other people just need to put this as a server IP into their multiplayer list, and join the world
+   - If not, check [common issues](#common-issues) below
+7. The link is automatically copied to your clipboard, and can now be shared with your friends
+8. Other people just need to put this as a server IP into their multiplayer list, and join the world
 
 ## Getting your Ngrok Auth Token
 1. Go to https://ngrok.com/, and sign up for a new account
 2. On the dashboard, on your left-hand side menu, click on Getting Started > Your Auth Token
 3. Copy the auth token, and put this into Ngrok LAN _(don't share this token with other people)_
 
-## TODO
+# Common Issues
+| **Error Message**                                                                    | **Resolution**                                                                                                                                             |
+|--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| An attempt was made to access a socket in a way forbidden by its access permissions. | Restart "Host Network Service" under the "Services" program                                                                                                |
+| The authtoken you specified does not look like a proper ngrok tunnel (ERR_NGROK_105) | Check that your auth token is valid, and is correctly inputted into the mod config                                                                         |
+| Your account is limited to <NUMBER> simultaneous ngrok agent session...              | Check that you are not running any other tunnels with this auth token, or that you are not hitting the limit for the max number of tunnels on your account |
+
+## Other Issues
+Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues)
+  
+# TODO
 - See if can make process parallel, so that the "Open to LAN" button doesn't 
 hitch
 - Add common issues with Ngrok
 - Add ModRinth and CurseForge integration
 - Add meta description for CurseForge and ModMenu information
 
-## License
-This template is available under the GNU AGPL-3.0 license.
+# License
+This mod is available under the GNU AGPL-3.0 license.
