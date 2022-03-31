@@ -26,6 +26,8 @@ import net.minecraft.world.GameMode;
 
 import net.minecraft.text.LiteralText;
 
+import java.lang.Thread;
+
 import java.io.File;  // Import the File class
 import java.io.IOException;  // Import the IOException class to handle errors
 import java.io.FileWriter;   // Import the FileWriter class
@@ -44,73 +46,65 @@ public class NgrokLaunch {
     //MC Client Configuration, for printing in chat
     MinecraftClient mc = MinecraftClient.getInstance();
 
-    // Method to write to an error log with a timestamped name (NOT USED)
-    //    private void writeErrorLog(String errorString) {
-    //
-    //        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-kk-mm-ss");
-    //        Date timestamp = new Date();
-    //        String timeStampString = dateFormat.format(timestamp);
-    //
-    //        try {
-    //            FileWriter myWriter = new FileWriter("NgrokLAN-" + timeStampString + ".txt");
-    //            myWriter.write("Files in Java might be tricky, but it is fun enough!");
-    //            myWriter.close();
-    //            mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a76Error logged under crash."));
-    //        } catch (IOException e) {
-    //            System.out.println("An error occurred.");
-    //            e.printStackTrace();
-    //        }
-    //    }
-
     private void ngrokInit(int port, Region region){
 
-        // Check if mod is enabled in the ModMenu
-        if (config.enabledCheckBox == true) {
-            if (config.authToken == "AuthToken") {
-                // Check if authToken field has actually been changed, if not, print this text in chat
-                mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cPlease set your Ngrok AuthToken! Do this in your menu > Mods > Ngrok LAN > Sliders Icon > Auth Token"));
-            } else {
-                try {
-                    NgrokLan.LOGGER.info("Launched Lan!");
+        //Defines a new threaded function to oepn the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
+        Thread thread = new Thread(() ->
+        {
+            // Check if mod is enabled in the ModMenu
+            if (config.enabledCheckBox == true) {
+                if (config.authToken == "AuthToken") {
+                    // Check if authToken field has actually been changed, if not, print this text in chat
+                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cPlease set your Ngrok AuthToken! Do this in your menu > Mods > Ngrok LAN > Sliders Icon > Auth Token"));
+                } else {
+                    try {
+                        NgrokLan.LOGGER.info("Launched Lan!");
 
-                    // Java-ngrok wrapper code, to initiate the tunnel, with the authoken, region
-                    final JavaNgrokConfig javaNgrokConfig = new JavaNgrokConfig.Builder()
-                            .withAuthToken(config.authToken)
-                            .withRegion(region)
-                            .build();
+                        mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7eStarting Ngrok Service..."));
 
-                    final NgrokClient ngrokClient = new NgrokClient.Builder()
-                            .withJavaNgrokConfig(javaNgrokConfig)
-                            .build();
+                        // Java-ngrok wrapper code, to initiate the tunnel, with the authoken, region
+                        final JavaNgrokConfig javaNgrokConfig = new JavaNgrokConfig.Builder()
+                                .withAuthToken(config.authToken)
+                                .withRegion(region)
+                                .build();
 
-                    final CreateTunnel createTunnel = new CreateTunnel.Builder()
-                            .withProto(Proto.TCP)
-                            .withAddr(port)
-                            .build();
+                        final NgrokClient ngrokClient = new NgrokClient.Builder()
+                                .withJavaNgrokConfig(javaNgrokConfig)
+                                .build();
 
-                    final Tunnel tunnel = ngrokClient.connect(createTunnel);
+                        final CreateTunnel createTunnel = new CreateTunnel.Builder()
+                                .withProto(Proto.TCP)
+                                .withAddr(port)
+                                .build();
+
+                        final Tunnel tunnel = ngrokClient.connect(createTunnel);
 
 
-                    NgrokLan.LOGGER.info(tunnel.getPublicUrl());
+                        NgrokLan.LOGGER.info(tunnel.getPublicUrl());
 
-                    var ngrok_url = tunnel.getPublicUrl().substring(6);
+                        var ngrok_url = tunnel.getPublicUrl().substring(6);
 
-                    // Print in chat the status of the tunnel, and the details copied to the clipboard
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
-                    mc.keyboard.setClipboard(ngrok_url);
-                } catch (Exception error) {
-                    error.printStackTrace();
+                        // Print in chat the status of the tunnel, and the details copied to the clipboard
+                        mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
+                        mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
+                        mc.keyboard.setClipboard(ngrok_url);
+                    } catch (Exception error) {
+                        error.printStackTrace();
 
-                    // Notify user of unsuccessful tunnel initiations
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
+                        // Notify user of unsuccessful tunnel initiations
+                        mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
+                        mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
+                    }
                 }
+            } else {
+                // This is printed when the boolean from config "enabledCheckBox" is false
+                mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a76Ngrok LAN Disabled."));
             }
-        } else {
-            // This is printed when the boolean from config "enabledCheckBox" is false
-            mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a76Ngrok LAN Disabled."));
-        }
+        });
+
+        // This starts the thread defined above
+        thread.start();
+
     }
 
     @Inject(method = "openToLan", at = @At("RETURN"))
