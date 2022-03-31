@@ -79,4 +79,4 @@ hitch
 - Add meta description for CurseForge and ModMenu information
 
 # License
-This mod is available under the GNU AGPL-3.0 license.
+This mod is available under the MIT license.
