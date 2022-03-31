@@ -5,8 +5,8 @@
 </h1>
 
 <div align="center">
-  <img src=https://img.shields.io/github/license/Alujjdnd/Ngrok-LAN>
-  <img src=https://img.shields.io/github/v/release/Alujjdnd/Ngrok-LAN>
+  <img alt="License" src=https://img.shields.io/github/license/Alujjdnd/Ngrok-LAN>
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Alujjdnd/Ngrok-LAN">
   </br>
   <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
