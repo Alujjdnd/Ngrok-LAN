@@ -28,10 +28,19 @@ The mod requires the following mods:
 5. Run the newly installed profile from step 3, and Ngrok LAN should load
 
 ## Configuring Ngrok-LAN
-In your Minecraft menu screen, a new "Mods" button should be visible, click on it. In the list of mods on the left hand side, find Ngrok LAN, and click on the sliders button on the top right corner, above the "issues" button. You should be presented with a few options:
-- **"Enabled?"**: This will enable/disable the mod, so you can configure whether the world is shared with Ngrok
-- **"Ngrok Auth Token"**: This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)
-- **"Region"**: This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency
+| **"Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
+|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **"Ngrok Auth Token"** | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
+| **"Region"**           | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
+### Ngrok Regions
+| US | United States |
+|----|---------------|
+| EU | Europe        |
+| AP | Asia/Pacific  |
+| AU | Australia     |
+| SA | South America |
+| JP | Japan         |
+| IN | India         |
 
 ## Starting Ngrok LAN
 1. Make sure that Ngrok LAN is enabled, the auth token is valid, and the correct region is selected
