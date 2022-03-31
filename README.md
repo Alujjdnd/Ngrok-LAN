@@ -19,6 +19,7 @@ hitch
 - Add common issues with Ngrok
 - Add ModRinth and CurseForge integration
 - Add meta description for CurseForge and ModMenu information
+- Add Open to WAN text
 
 ## License
 This template is available under the GNU AGPL-3.0 license.

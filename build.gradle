@@ -3,6 +3,9 @@ plugins {
 	id 'maven-publish'
 	id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
+	id "com.modrinth.minotaur" version "2.+"
+	id 'net.minecraftforge.gradle.forge' version '2.0.2'
+	id 'com.matthewprenger.cursegradle' version '1.4.0'
 }
 
 sourceCompatibility = JavaVersion.VERSION_17
@@ -92,5 +95,28 @@ publishing {
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for
 		// retrieving dependencies.
+	}
+}
+
+import com.modrinth.minotaur.dependencies.ModDependency
+modrinth {
+	token = System.getenv("MODRINTH_TOKEN") // This is the default. Remember to have the MODRINTH_TOKEN environment variable set or else this will fail, or set it to whatever you want - just make sure it stays private!
+	projectId = "oTa1qz6R"
+	versionNumber = project.mod_version // You don't need to set this manually. Will fail if Modrinth has this version already
+	versionType = "release" // This is the default
+	uploadFile = remapJar // With Fabric Loom or Architectury Loom, this MUST be set to `remapJar` instead of `jar`!
+	gameVersions = [project.minecraft_version] // Must be an array, even with only one version
+	loaders = ["fabric"] // Must also be an array - no need to specify this if you're using Fabric Loom or ForgeGradle
+	dependencies = [
+			new ModDependency("mOgUt4GM", "required")
+	]
+}
+
+curseforge {
+	apiKey = System.getenv("CURSEFORGE_TOKEN") // This should really be in a gradle.properties file
+	project {
+		id = '602252'
+		changelog = 'Added content and fixed bugs' // A file can also be set using: changelog = file('changelog.txt')
+		releaseType = 'release'
 	}
 }
