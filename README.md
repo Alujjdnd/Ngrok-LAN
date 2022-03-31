@@ -8,7 +8,7 @@
   <img src=https://img.shields.io/github/license/Alujjdnd/Ngrok-LAN>
   <img src=https://img.shields.io/github/v/release/Alujjdnd/Ngrok-LAN>
   </br>
-  <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSS.png>
+  <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
 
 Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on "Open to LAN". This mod uses Ngrok as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open to LAN". 
