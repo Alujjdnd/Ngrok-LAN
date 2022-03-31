@@ -55,6 +55,8 @@ In your Minecraft menu screen, a new "Mods" button should be visible, click on i
 | The authtoken you specified does not look like a proper ngrok tunnel (ERR_NGROK_105) | Check that your auth token is valid, and is correctly inputted into the mod config                                                                         |
 | Your account is limited to <NUMBER> simultaneous ngrok agent session...              | Check that you are not running any other tunnels with this auth token, or that you are not hitting the limit for the max number of tunnels on your account |
 
+- For more errors, error codes and their resolution, check the [Ngrok docs](https://ngrok.com/docs/errors)
+  
 ## Other Issues
 Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues)
   
