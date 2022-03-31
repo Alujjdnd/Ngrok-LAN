@@ -75,11 +75,8 @@ The mod requires the following mods:
 Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues)
   
 # TODO
-- See if can make process parallel, so that the "Open to LAN" button doesn't 
-hitch
-- Add common issues with Ngrok
 - Add ModRinth and CurseForge integration
-- Add meta description for CurseForge and ModMenu information
+- Add meta description for ~~CurseForge~~ and ModMenu information
 - Add Open to WAN text
 
 # License
