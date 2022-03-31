@@ -28,13 +28,15 @@ The mod requires the following mods:
 5. Run the newly installed profile from step 3, and Ngrok LAN should load
 
 ## Configuring Ngrok-LAN
-| **"Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
+| **Field**         | **Description**                                              |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **"Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
 | **"Ngrok Auth Token"** | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
 | **"Region"**           | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
 ### Ngrok Regions
-| US | United States |
+| Code | Region |
 |----|---------------|
+| US | United States |
 | EU | Europe        |
 | AP | Asia/Pacific  |
 | AU | Australia     |
