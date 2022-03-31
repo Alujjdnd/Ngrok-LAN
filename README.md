@@ -20,12 +20,10 @@ The mod requires the following mods:
 - [ClothConfig API](https://www.curseforge.com/minecraft/mc-mods/cloth-config)
 - [ModMenu](https://www.curseforge.com/minecraft/mc-mods/modmenu)
 
-## Install Fabric Loader
+## Install Fabric Loader and Ngrok-LAN
 1. Go to the [FabricMC website](https://fabricmc.net/use/installer/) and download the latest installer
 2. Run the JAR, a window will pop up. Choose the correct version of Minecraft and loader (this mod currently requires Minecraft v1.18.2 and loader v0.13.3), and click on "Install".
 3. A new game version and profile will be created in the launcher's menu, which you can now use to launch Fabric.
-
-## Install Ngrok-LAN
 4. Put the mod JAR (available under [Releases](https://github.com/Alujjdnd/Ngrok-LAN/releases)) into your "mods" folder, along with the ClothConfig API and ModMenu JARs. (The Fabric API JAR should already be in your mods folder from the previous section)
 5. Run the newly installed profile from step 3, and Ngrok LAN should load
 
@@ -48,9 +46,6 @@ In your Minecraft menu screen, a new "Mods" button should be visible, click on i
 1. Go to https://ngrok.com/, and sign up for a new account
 2. On the dashboard, on your left-hand side menu, click on Getting Started > Your Auth Token
 3. Copy the auth token, and put this into Ngrok LAN _(don't share this token with other people)_
-
-## Temp Docs
-- Will hitch a bit for now, especially on first load.
 
 ## TODO
 - See if can make process parallel, so that the "Open to LAN" button doesn't 
