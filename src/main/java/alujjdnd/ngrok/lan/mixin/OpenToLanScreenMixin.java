@@ -44,36 +44,22 @@ public class OpenToLanScreenMixin extends Screen {
     @Inject(method = "init", at = @At("HEAD"))
     private void initWidgets(CallbackInfo info) {
 
-        if (config.enabledCheckBox == true) { //TODO: check mod enabled
-            this.addDrawableChild(new ButtonWidget(this.width / 2 + 104, this.height / 4 + 120 + -16, 20, 20, new TranslatableText("text.autoconfig.ngroklan.LanButton"), (button) -> {
+        if (config.enabledCheckBox) { //if mod enabled in mod menu
+            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.autoconfig.ngroklan.LanButton"), (button) -> {
 
-                this.client.setScreen((Screen) null);
+                this.client.setScreen(null);
                 int i = NetworkUtils.findLocalPort();
                 TranslatableText text;
                 if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, i)) {
 
                     switch (config.regionSelect) {
-                        case US:
-                            ngrokInit(i, Region.US);
-                            break;
-                        case EU:
-                            ngrokInit(i, Region.EU);
-                            break;
-                        case AP:
-                            ngrokInit(i, Region.AP);
-                            break;
-                        case AU:
-                            ngrokInit(i, Region.AU);
-                            break;
-                        case SA:
-                            ngrokInit(i, Region.SA);
-                            break;
-                        case JP:
-                            ngrokInit(i, Region.JP);
-                            break;
-                        case IN:
-                            ngrokInit(i, Region.IN);
-                            break;
+                        case US -> ngrokInit(i, Region.US);
+                        case EU -> ngrokInit(i, Region.EU);
+                        case AP -> ngrokInit(i, Region.AP);
+                        case AU -> ngrokInit(i, Region.AU);
+                        case SA -> ngrokInit(i, Region.SA);
+                        case JP -> ngrokInit(i, Region.JP);
+                        case IN -> ngrokInit(i, Region.IN);
                     }
 
                     text = new TranslatableText("commands.publish.started", new Object[]{i});
@@ -92,8 +78,7 @@ public class OpenToLanScreenMixin extends Screen {
         //Defines a new threaded function to oepn the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
         Thread thread = new Thread(() ->
         {
-            // Check if mod is enabled in the ModMenu
-            if (config.authToken == "AuthToken") {
+            if (config.authToken.equals("AuthToken")) {
                 // Check if authToken field has actually been changed, if not, print this text in chat
                 mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cPlease set your Ngrok AuthToken! Do this in your menu > Mods > Ngrok LAN > Sliders Icon > Auth Token"));
             } else {
@@ -118,7 +103,6 @@ public class OpenToLanScreenMixin extends Screen {
                             .build();
 
                     final Tunnel tunnel = ngrokClient.connect(createTunnel);
-
 
                     NgrokLan.LOGGER.info(tunnel.getPublicUrl());
 
