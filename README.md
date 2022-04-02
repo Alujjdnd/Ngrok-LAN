@@ -51,7 +51,7 @@ The mod requires the following mods:
 1. Make sure that Ngrok LAN is enabled, the auth token is valid, and the correct region is selected
 2. Open a new singleplayer world, and click on Open to LAN
 3. Configure the game mode and whether to allow cheats
-4. Press on "Start LAN World"
+4. Press on "Open Public Server"
 5. The message "Ngrok service initiated successfully" should appear in chat, with a link highlighted in yellow
    - If not, check [common issues](#common-issues) below
 7. The link is automatically copied to your clipboard, and can now be shared with your friends
