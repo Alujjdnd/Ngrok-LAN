@@ -14,7 +14,7 @@
   <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
 
-Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on "Open to LAN". This mod uses Ngrok as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open to LAN". 
+Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on the new "Open Public Server" button! This mod uses Ngrok as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open Public Server". 
 
 # Installation/Quick Start
 ## Dependencies
@@ -77,7 +77,6 @@ Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues
 # TODO
 - Add ModRinth and CurseForge integration
 - Add meta description for ~~CurseForge~~ and ModMenu information
-- Add Open to WAN text
 - Specify dependencies
 
 # License
