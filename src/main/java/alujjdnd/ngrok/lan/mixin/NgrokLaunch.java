@@ -52,7 +52,7 @@ public class NgrokLaunch {
         Thread thread = new Thread(() ->
         {
             // Check if mod is enabled in the ModMenu
-            if (config.enabledCheckBox == true) {
+            if (false) {
                 if (config.authToken == "AuthToken") {
                     // Check if authToken field has actually been changed, if not, print this text in chat
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cPlease set your Ngrok AuthToken! Do this in your menu > Mods > Ngrok LAN > Sliders Icon > Auth Token"));
@@ -107,38 +107,38 @@ public class NgrokLaunch {
 
     }
 
-    @Inject(method = "openToLan", at = @At("RETURN"))
-    private void onOpenToLan(GameMode gameMode, boolean cheatsAllowed, int port, CallbackInfoReturnable<Boolean> cir)
-    {
-
-        // Switch statement for selecting the region, reading off of the config.regionselect enum
-        switch (config.regionSelect) {
-            case US:
-                ngrokInit(port, Region.US);
-                break;
-            case EU:
-                ngrokInit(port, Region.EU);
-                break;
-            case AP:
-                ngrokInit(port, Region.AP);
-                break;
-            case AU:
-                ngrokInit(port, Region.AU);
-                break;
-            case SA:
-                ngrokInit(port, Region.SA);
-                break;
-            case JP:
-                ngrokInit(port, Region.JP);
-                break;
-            case IN:
-                ngrokInit(port, Region.IN);
-                break;
-        }
-
-
-
-    }
+//    @Inject(method = "openToLan", at = @At("RETURN"))
+//    private void onOpenToLan(GameMode gameMode, boolean cheatsAllowed, int port, CallbackInfoReturnable<Boolean> cir)
+//    {
+//
+//        // Switch statement for selecting the region, reading off of the config.regionselect enum
+//        switch (config.regionSelect) {
+//            case US:
+//                ngrokInit(port, Region.US);
+//                break;
+//            case EU:
+//                ngrokInit(port, Region.EU);
+//                break;
+//            case AP:
+//                ngrokInit(port, Region.AP);
+//                break;
+//            case AU:
+//                ngrokInit(port, Region.AU);
+//                break;
+//            case SA:
+//                ngrokInit(port, Region.SA);
+//                break;
+//            case JP:
+//                ngrokInit(port, Region.JP);
+//                break;
+//            case IN:
+//                ngrokInit(port, Region.IN);
+//                break;
+//        }
+//
+//
+//
+//    }
 }
 
 

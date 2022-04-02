@@ -78,6 +78,7 @@ Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues
 - Add ModRinth and CurseForge integration
 - Add meta description for ~~CurseForge~~ and ModMenu information
 - Add Open to WAN text
+- Specify dependencies
 
 # License
 This mod is available under the MIT license.
