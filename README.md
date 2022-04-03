@@ -88,7 +88,7 @@ Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues
 </div>
 
 ## Ngrok Account Requirements
-  The mod requires a free Ngrok account or higher. The free tier for Ngrok allows you to have 1 free online tunnel simultaenously, which means that, with one Ngrok free account, you can only host 1 Ngrok-LAN server at the same tiume. The paid tiers allows you to have custom domains and more simultaenous online tunnels, but custom domains are not yet supported in this mod.
+  The mod only requires a free Ngrok account (or higher). The free tier for Ngrok allows you to have 1 free online tunnel simultaenously, which means that, with one Ngrok free account, you can only host 1 Ngrok-LAN server at the same tiume. The paid tiers allows you to have custom domains and more simultaenous online tunnels, but custom domains are not yet supported in this mod.
   
   More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
   
