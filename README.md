@@ -81,7 +81,7 @@ Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues
 # What is Ngrok?
   Ngrok is a service that exposes your applications running locally to the internet, without port forwarding. Usually, when setting up a Minecraft server, you would have to open the server, and "forward" your port through your router. Port forwarding "publishes" your server to the internet, so anyone with you IP can join. Think of this as your router "forwarding" the network packets from your server (part of your local network) to your friends (part of the wider internet).
   
-  Using Ngrok, however, we don't need to forward the port, as all the internet traffic is routed through their application, then their datacentres. Ngrok provides us with a link in return, that we can give to our friends to connect to our server. This doesn't require any other configuration on your side - as long as you have internet, and an Ngrok account, you can host your singleplayer world to your friends across the globe.
+  Using Ngrok, however, we don't need to forward the port. All the internet traffic is routed through an application (Ngrok-LAN in this case), then their datacentres. Ngrok provides us with a link in return, that we can give to our friends to connect to our server. This doesn't require any other configuration on your side - as long as you have internet, and an Ngrok account, you can host your singleplayer world to your friends across the globe.
 
 <div align="center">
 <img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/Network.jpg" alt="Network Diagram" width="80%"/>
