@@ -14,7 +14,7 @@
   <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
 
-Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on the new "Open Public Server" button! This mod uses Ngrok as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open Public Server". 
+Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on the new "Open Public Server" button! This mod uses Ngrok, a free service to ease the creation of servers, as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open Public Server". 
 
 For more on how Ngrok-LAN works, check out [What is Ngrok](#what-is-ngrok). 
 
@@ -62,7 +62,7 @@ The mod requires the following mods:
 8. Other people just need to put this as a server IP into their multiplayer list, and join the world
 
 ## Getting your Ngrok Auth Token
-1. Go to https://ngrok.com/, and sign up for a new account
+1. Go to https://ngrok.com/, and sign up for a new free account
 2. On the dashboard, on your left-hand side menu, click on Getting Started > Your Auth Token
 3. Copy the auth token, and put this into Ngrok LAN _(don't share this token with other people)_
 
@@ -88,7 +88,7 @@ Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues
 </div>
 
 ## Ngrok Account Requirements
-  The mod only requires a free Ngrok account (or higher). The free tier for Ngrok allows you to have 1 free online tunnel simultaenously, which means that, with one Ngrok free account, you can only host 1 Ngrok-LAN server at the same tiume. The paid tiers allows you to have custom domains and more simultaenous online tunnels, but custom domains are not yet supported in this mod.
+  **The mod only requires a free Ngrok account**. The free tier for Ngrok allows you to have 1 free online tunnel simultaenously, which means that, with one Ngrok free account, you can only host 1 Ngrok-LAN server at the same tiume. The paid tiers allows you to have custom domains and more simultaenous online tunnels, but custom domains are not yet supported in this mod.
   
   More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
   
