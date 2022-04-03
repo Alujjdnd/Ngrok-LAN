@@ -16,6 +16,10 @@
 
 Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via clicking on the new "Open Public Server" button! This mod uses Ngrok as the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to after you click on "Open Public Server". 
 
+For more on how Ngrok-LAN works, check out [What is Ngrok](#what-is-ngrok).
+
+
+
 # Installation/Quick Start
 ## Dependencies
 The mod requires the following mods:
@@ -73,6 +77,20 @@ The mod requires the following mods:
   
 ## Other Issues
 Please open a new issue in [Issues](https://github.com/Alujjdnd/Ngrok-LAN/issues)
+  
+# What is Ngrok?
+  Ngrok is a service that exposes your applications running locally to the internet, without port forwarding. Usually, when setting up a Minecraft server, you would have to open the server, and "forward" your port through your router. Port forwarding "publishes" your server to the internet, so anyone with you IP can join. Think of this as your router "forwarding" the network packets from your server (part of your local network) to your friends (part of the wider internet).
+  
+  Using Ngrok, however, we don't need to forward the port. All the internet traffic is routed through an application (Ngrok-LAN in this case), then their datacentres. Ngrok provides us with a link in return, that we can give to our friends to connect to our server. This doesn't require any other configuration on your side - as long as you have internet, and an Ngrok account, you can host your singleplayer world to your friends across the globe.
+
+<div align="center">
+<img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/Network.jpg" alt="Network Diagram" width="80%"/>
+</div>
+
+## Ngrok Account Requirements
+  The mod requires a free Ngrok account or higher. The free tier for Ngrok allows you to have 1 free online tunnel simultaenously, which means that, with one Ngrok free account, you can only host 1 Ngrok-LAN server at the same tiume. The paid tiers allows you to have custom domains and more simultaenous online tunnels, but custom domains are not yet supported in this mod.
+  
+  More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
   
 # TODO
 - Add ModRinth and CurseForge integration
