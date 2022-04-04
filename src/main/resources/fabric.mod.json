@@ -6,7 +6,8 @@
   "name": "Ngrok LAN",
   "description": "Exposes your local LAN server to the internet with Ngrok.",
   "authors": [
-    "Peter Zhang (alujjdnd)"
+    "Peter Zhang (alujjdnd)",
+    "Flooflez"
   ],
   "contact": {
     "homepage": "https://github.com/Alujjdnd/Ngrok-LAN",
