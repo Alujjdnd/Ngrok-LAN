@@ -5,7 +5,6 @@ import alujjdnd.ngrok.lan.NgrokLan;
 import alujjdnd.ngrok.lan.config.NLanConfig;
 import com.github.alexdlaird.ngrok.NgrokClient;
 import com.github.alexdlaird.ngrok.conf.JavaNgrokConfig;
-import com.github.alexdlaird.ngrok.installer.NgrokInstaller;
 import com.github.alexdlaird.ngrok.protocol.CreateTunnel;
 import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Region;
