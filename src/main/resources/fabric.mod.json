@@ -15,7 +15,7 @@
     "issues": "https://github.com/Alujjdnd/Ngrok-LAN/issues"
   },
 
-  "license": "AGPL-3.0",
+  "license": "MIT",
   "icon": "assets/ngroklan/icon.png",
 
   "environment": "*",
