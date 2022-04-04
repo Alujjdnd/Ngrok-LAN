@@ -73,8 +73,8 @@ Region"**           | This is where you can select the region of the Ngrok datac
 4. Press on "Open Public Server"
 5. The message "Ngrok service initiated successfully" should appear in chat, with a link highlighted in yellow
     - If not, check [common issues](#common-issues) below
-7. The link is automatically copied to your clipboard, and can now be shared with your friends
-8. Other people just need to put this as a server IP into their multiplayer list, and join the world
+6. The link is automatically copied to your clipboard, and can now be shared with your friends
+7. Other people just need to put this as a server IP into their multiplayer list, and join the world
 
 ## Getting your Ngrok Auth Token
 
@@ -128,6 +128,7 @@ More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
 - Add ModRinth and CurseForge integration
 - Add meta description for ~~CurseForge~~ and ModMenu information
 - Specify dependencies
+- Add list of incompatible mods
 
 # License
 
