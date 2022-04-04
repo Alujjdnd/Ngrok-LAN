@@ -128,6 +128,7 @@ More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
 - Add ModRinth and CurseForge integration
 - Add meta description for ~~CurseForge~~ and ModMenu information
 - Specify dependencies
+- Add list of incompatible mods
 
 # License
 
