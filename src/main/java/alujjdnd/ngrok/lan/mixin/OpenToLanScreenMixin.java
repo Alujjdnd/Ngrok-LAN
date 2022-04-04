@@ -5,6 +5,7 @@ import alujjdnd.ngrok.lan.NgrokLan;
 import alujjdnd.ngrok.lan.config.NLanConfig;
 import com.github.alexdlaird.ngrok.NgrokClient;
 import com.github.alexdlaird.ngrok.conf.JavaNgrokConfig;
+import com.github.alexdlaird.ngrok.installer.NgrokInstaller;
 import com.github.alexdlaird.ngrok.protocol.CreateTunnel;
 import com.github.alexdlaird.ngrok.protocol.Proto;
 import com.github.alexdlaird.ngrok.protocol.Region;
@@ -46,34 +47,22 @@ public class OpenToLanScreenMixin extends Screen {
 
         if (config.enabledCheckBox) { //if mod enabled in mod menu
             this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.autoconfig.ngroklan.LanButton"), (button) -> {
-
-                this.client.setScreen(null);
-                int i = NetworkUtils.findLocalPort();
-                TranslatableText text;
-                if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, i)) {
-
+                int localPort = NetworkUtils.findLocalPort(); // part of the minecraft Networkutils class, finds an available local port (this was from the openToLan class)
+                this.client.setScreen(null); // Removed all elements from the screen (this closes all menu windows)
                     switch (config.regionSelect) {
-                        case US -> ngrokInit(i, Region.US);
-                        case EU -> ngrokInit(i, Region.EU);
-                        case AP -> ngrokInit(i, Region.AP);
-                        case AU -> ngrokInit(i, Region.AU);
-                        case SA -> ngrokInit(i, Region.SA);
-                        case JP -> ngrokInit(i, Region.JP);
-                        case IN -> ngrokInit(i, Region.IN);
+                        case US -> ngrokInit(localPort, Region.US);
+                        case EU -> ngrokInit(localPort, Region.EU);
+                        case AP -> ngrokInit(localPort, Region.AP);
+                        case AU -> ngrokInit(localPort, Region.AU);
+                        case SA -> ngrokInit(localPort, Region.SA);
+                        case JP -> ngrokInit(localPort, Region.JP);
+                        case IN -> ngrokInit(localPort, Region.IN);
                     }
-
-                    text = new TranslatableText("commands.publish.started", new Object[]{i});
-                } else {
-                    text = new TranslatableText("commands.publish.failed");
-                }
-
-                this.client.inGameHud.getChatHud().addMessage(text);
-                this.client.updateWindowTitle();
             }));
         }
     }
 
-    private void ngrokInit(int port, Region region) {
+    private void ngrokInit(int port, Region region){
 
         //Defines a new threaded function to oepn the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
         Thread thread = new Thread(() ->
@@ -112,13 +101,23 @@ public class OpenToLanScreenMixin extends Screen {
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
                     mc.keyboard.setClipboard(ngrok_url);
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("LAN server started on port " + port));
+
+                    // This starts the LAN server and greys out the open to lan button
+                    TranslatableText text;
+                    if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
+                        text = new TranslatableText("commands.publish.started", new Object[]{port});
+                    } else {
+                        text = new TranslatableText("commands.publish.failed");
+                    }
+                    this.client.inGameHud.getChatHud().addMessage(text);
+                    this.client.updateWindowTitle();
+
                 } catch (Exception error) {
                     error.printStackTrace();
-
-                    // Notify user of unsuccessful tunnel initiations
                     mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
                     mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
+                    //ngrokInitiated = false;
+                    throw new RuntimeException("Ngrok Service Failed to Start" + error.getMessage());
                 }
             }
         });
