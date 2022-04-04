@@ -89,7 +89,7 @@ Resolution**                                                                    
 |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | An attempt was made to access a socket in a way forbidden by its access permissions. | Restart "Host Network Service" under the "Services" program                                                                                                |
 | The authtoken you specified does not look like a proper ngrok tunnel (ERR_NGROK_105) | Check that your auth token is valid, and is correctly inputted into the mod config                                                                         |
-| Your account is limited to <NUMBER> simultaneous ngrok agent session...              | Check that you are not running any other tunnels with this auth token, or that you are not hitting the limit for the max number of tunnels on your account |
+| Your account is limited to <NUMBER> simultaneous ngrok agent session...              | Check that you are not running any other tunnels with this auth token, try change to regions if you are still getting this error                           |
 
 - For more errors, error codes and their resolution, check the [Ngrok docs](https://ngrok.com/docs/errors)
 
