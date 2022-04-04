@@ -21,6 +21,10 @@ after you click on "Open Public Server".
 
 For more on how Ngrok-LAN works, check out [What is Ngrok](#what-is-ngrok).
 
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/demo.gif" alt="Network Diagram" width="70%"/>
+</div>
+
 # Installation/Quick Start
 
 ## Dependencies
