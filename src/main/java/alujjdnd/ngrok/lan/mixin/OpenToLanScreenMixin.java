@@ -48,20 +48,20 @@ public class OpenToLanScreenMixin extends Screen {
             this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.autoconfig.ngroklan.LanButton"), (button) -> {
                 int localPort = NetworkUtils.findLocalPort(); // part of the minecraft Networkutils class, finds an available local port (this was from the openToLan class)
                 this.client.setScreen(null); // Removed all elements from the screen (this closes all menu windows)
-                    switch (config.regionSelect) {
-                        case US -> ngrokInit(localPort, Region.US);
-                        case EU -> ngrokInit(localPort, Region.EU);
-                        case AP -> ngrokInit(localPort, Region.AP);
-                        case AU -> ngrokInit(localPort, Region.AU);
-                        case SA -> ngrokInit(localPort, Region.SA);
-                        case JP -> ngrokInit(localPort, Region.JP);
-                        case IN -> ngrokInit(localPort, Region.IN);
-                    }
+                switch (config.regionSelect) {
+                    case EU -> ngrokInit(localPort, Region.EU);
+                    case AP -> ngrokInit(localPort, Region.AP);
+                    case AU -> ngrokInit(localPort, Region.AU);
+                    case SA -> ngrokInit(localPort, Region.SA);
+                    case JP -> ngrokInit(localPort, Region.JP);
+                    case IN -> ngrokInit(localPort, Region.IN);
+                    default -> ngrokInit(localPort, Region.US); //US bundled here
+                }
             }));
         }
     }
 
-    private void ngrokInit(int port, Region region){
+    private void ngrokInit(int port, Region region) {
 
         //Defines a new threaded function to oepn the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
         Thread thread = new Thread(() ->
@@ -81,7 +81,7 @@ public class OpenToLanScreenMixin extends Screen {
                             .withRegion(region)
                             .build();
 
-                    final NgrokClient ngrokClient = new NgrokClient.Builder()
+                    NgrokLan.ngrokClient = new NgrokClient.Builder()
                             .withJavaNgrokConfig(javaNgrokConfig)
                             .build();
 
@@ -90,7 +90,7 @@ public class OpenToLanScreenMixin extends Screen {
                             .withAddr(port)
                             .build();
 
-                    final Tunnel tunnel = ngrokClient.connect(createTunnel);
+                    final Tunnel tunnel = NgrokLan.ngrokClient.connect(createTunnel);
 
                     NgrokLan.LOGGER.info(tunnel.getPublicUrl());
 
@@ -103,6 +103,8 @@ public class OpenToLanScreenMixin extends Screen {
 
                     // This starts the LAN server and greys out the open to lan button
                     TranslatableText text;
+
+
                     if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
                         text = new TranslatableText("commands.publish.started", new Object[]{port});
                     } else {
