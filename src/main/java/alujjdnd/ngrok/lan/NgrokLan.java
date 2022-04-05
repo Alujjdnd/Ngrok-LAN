@@ -1,7 +1,9 @@
 package alujjdnd.ngrok.lan;
 
+import alujjdnd.ngrok.lan.command.LanOpCommand;
 import com.github.alexdlaird.ngrok.NgrokClient;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,9 +31,10 @@ public class NgrokLan implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 		AutoConfig.register(NLanConfig.class, JanksonConfigSerializer::new);
 
-
+		//register commands
+		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
+				LanOpCommand.register(dispatcher));
 	}
-
 
 
 }
