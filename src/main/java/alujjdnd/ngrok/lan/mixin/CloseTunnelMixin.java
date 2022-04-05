@@ -11,8 +11,6 @@ import com.github.alexdlaird.ngrok.NgrokClient;
 
 @Mixin(MinecraftServer.class)
 public abstract class CloseTunnelMixin {
-
-    // Not yet working, this is constructing a new object instead of referencing the one in OpenToLanScreenMixin
     @Inject(at = @At("TAIL"), method = "shutdown")
     private void afterShutdownServer(CallbackInfo info) {
         NgrokLan.LOGGER.info("Closing Lan!");
