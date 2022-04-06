@@ -18,6 +18,7 @@ import net.minecraft.client.util.NetworkUtils;
 import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +46,7 @@ public class OpenToLanScreenMixin extends Screen {
     private void initWidgets(CallbackInfo info) {
 
         if (config.enabledCheckBox) { //if mod enabled in mod menu
-            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.autoconfig.ngroklan.LanButton"), (button) -> {
+            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.UI.ngroklan.LanButton"), (button) -> {
                 int localPort = NetworkUtils.findLocalPort(); // part of the minecraft Networkutils class, finds an available local port (this was from the openToLan class)
                 this.client.setScreen(null); // Removed all elements from the screen (this closes all menu windows)
                 switch (config.regionSelect) {
@@ -68,12 +69,15 @@ public class OpenToLanScreenMixin extends Screen {
         {
             if (config.authToken.equals("AuthToken")) {
                 // Check if authToken field has actually been changed, if not, print this text in chat
-                mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cPlease set your Ngrok AuthToken! Do this in your menu > Mods > Ngrok LAN > Sliders Icon > Auth Token"));
+                mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.AuthTokenError"));
+                mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.AuthTokenError").formatted(Formatting.RED));
+                //\u00a7c
             } else {
                 try {
                     NgrokLan.LOGGER.info("Launched Lan!");
 
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7eStarting Ngrok Service..."));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.info.ngroklan.startMessage").formatted(Formatting.YELLOW));
+
 
                     // Java-ngrok wrapper code, to initiate the tunnel, with the authoken, region
                     final JavaNgrokConfig javaNgrokConfig = new JavaNgrokConfig.Builder()
@@ -97,8 +101,8 @@ public class OpenToLanScreenMixin extends Screen {
                     var ngrok_url = tunnel.getPublicUrl().substring(6);
 
                     // Print in chat the status of the tunnel, and the details copied to the clipboard
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7aNgrok Service Initiated Successfully!"));
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("Your server IP is - \u00a7e" + ngrok_url + "\u00a7f (Copied to Clipboard)"));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.info.ngroklan.success").formatted(Formatting.GREEN));
+                    mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.ip", ("\u00a7e" + ngrok_url + "\u00a7f")));
                     mc.keyboard.setClipboard(ngrok_url);
 
                     // This starts the LAN server and greys out the open to lan button
@@ -106,7 +110,7 @@ public class OpenToLanScreenMixin extends Screen {
 
 
                     if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
-                        text = new TranslatableText("commands.publish.started", new Object[]{port});
+                        text = new TranslatableText("commands.publish.started", port);
                     } else {
                         text = new TranslatableText("commands.publish.failed");
                     }
@@ -116,7 +120,7 @@ public class OpenToLanScreenMixin extends Screen {
                 } catch (Exception error) {
                     error.printStackTrace();
                     mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
-                    mc.inGameHud.getChatHud().addMessage(new LiteralText("\u00a7cNgrok Service Initiation Failed!"));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.fail").formatted(Formatting.RED));
                     //ngrokInitiated = false;
                     throw new RuntimeException("Ngrok Service Failed to Start" + error.getMessage());
                 }
