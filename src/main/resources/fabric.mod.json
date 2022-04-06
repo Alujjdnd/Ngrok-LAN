@@ -23,7 +23,9 @@
     "main": [
       "alujjdnd.ngrok.lan.NgrokLan"
     ],
-    
+    "server": [
+      "alujjdnd.ngrok.lan.NgrokServerInitialiser"
+    ],
     "modmenu": [ 
       "alujjdnd.ngrok.lan.config.ModMenuIntegration"
     ]

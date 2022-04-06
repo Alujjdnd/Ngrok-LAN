@@ -6,13 +6,14 @@ import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
-
-import static alujjdnd.ngrok.lan.NgrokLan.LOGGER;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Environment(EnvType.SERVER)
 public class NgrokServerInitialiser implements DedicatedServerModInitializer
 {
 
+    public static final Logger LOGGER = LoggerFactory.getLogger(NgrokLan.MODID);
 
     @Override
     // Initialize the differents parts of the mod when lauched on server
@@ -22,7 +23,8 @@ public class NgrokServerInitialiser implements DedicatedServerModInitializer
 
         //register commands
         CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
-                LanOpCommand.register(dispatcher));
+                LanOpCommand.register(dispatcher)
+        );
     }
 
 }

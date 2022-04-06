@@ -40,7 +40,6 @@ public class LanOpCommand {
 
     private static int execute(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
         NgrokLan.LOGGER.info("/op called"); //for debugging
-        //OperatorList ops = ctx.getSource().getServer().getPlayerManager().getOpList();
         Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "players");
 
         OperatorList ops = ctx.getSource().getServer().getPlayerManager().getOpList();
