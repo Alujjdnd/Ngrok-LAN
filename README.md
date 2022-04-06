@@ -48,14 +48,11 @@ The mod requires the following mods:
 
 ## Configuring Ngrok-LAN
 
-| **Field**         | **Description**                                              |
+| **Field**              | **Description**                                              |
 |------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| **"
-Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
-| **"Ngrok Auth
-Token"** | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
-| **"
-Region"**           | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
+| **"Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
+| **"Ngrok Auth Token"** | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
+| **"Region"**           | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
 
 ### Ngrok Regions
 
@@ -88,8 +85,7 @@ Region"**           | This is where you can select the region of the Ngrok datac
 
 # Common Issues
 
-| **Error Message**                                                                    | **
-Resolution**                                                                                                                                             |
+| **Error Message**                                                                    | **Resolution**                                                                                                                                             |
 |--------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | An attempt was made to access a socket in a way forbidden by its access permissions. | Restart "Host Network Service" under the "Services" program                                                                                                |
 | The authtoken you specified does not look like a proper ngrok tunnel (ERR_NGROK_105) | Check that your auth token is valid, and is correctly inputted into the mod config                                                                         |
