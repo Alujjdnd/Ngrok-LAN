@@ -3,23 +3,23 @@ package alujjdnd.ngrok.lan.command;
 import alujjdnd.ngrok.lan.NgrokLan;
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+//import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+//import com.mojang.brigadier.builder.RequiredArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.brigadier.tree.LiteralCommandNode;
+//import com.mojang.brigadier.tree.LiteralCommandNode;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.MessageArgumentType;
+//import net.minecraft.command.argument.MessageArgumentType;
 import net.minecraft.server.OperatorEntry;
 import net.minecraft.server.OperatorList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
-
-import java.util.Collection;
-import java.util.Iterator;
+//import net.minecraft.text.Text;
+//import net.minecraft.text.TranslatableText;
+//
+//import java.util.Collection;
+//import java.util.Iterator;
 
 public class LanOpCommand {
 
