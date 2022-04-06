@@ -1,3 +1,4 @@
+![Banner](https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/2224815e9436de937a0ee02833a8663eca765ca3/docs/assets/banner-code-of-conduct.svg)
 # Contributor Covenant Code of Conduct
 
 ## Our Pledge
