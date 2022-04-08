@@ -42,7 +42,10 @@ public class LanDeopCommand {
                 ops.remove(gameProfile);
                 //bypassPlayerLimit -> allow player to join when server is full (not sure if it kicks people)
 
-                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.success", gameProfile.getName()));
+                TranslatableText message = new TranslatableText("commands.deop.success", gameProfile.getName());
+
+                ctx.getSource().sendFeedback(message, true);
+                mc.inGameHud.getChatHud().addMessage(message);
             } else {
                 mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.failed"));
             }

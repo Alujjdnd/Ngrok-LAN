@@ -13,6 +13,7 @@ import net.minecraft.server.OperatorList;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 import java.util.Collection;
@@ -43,7 +44,11 @@ public class LanOpCommand {
                 ops.add(new OperatorEntry(gameProfile, 3, false) );
                 //bypassPlayerLimit -> allow player to join when server is full (not sure if it kicks people)
 
-                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.op.success", gameProfile.getName()));
+                TranslatableText message = new TranslatableText("commands.op.success", gameProfile.getName());
+
+                ctx.getSource().sendFeedback(message, true);
+
+                mc.inGameHud.getChatHud().addMessage(message);
             }
             else{
                 mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.op.fail"));

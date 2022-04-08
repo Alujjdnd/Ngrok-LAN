@@ -15,4 +15,6 @@ public class NLanConfig implements ConfigData
 
     public regionSelectEnum regionSelect = regionSelectEnum.US;
 
+    public boolean onlineCheckBox = true;
+
 }
