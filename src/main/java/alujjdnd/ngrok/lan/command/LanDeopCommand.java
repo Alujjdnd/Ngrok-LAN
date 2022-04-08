@@ -44,7 +44,7 @@ public class LanDeopCommand {
 
                 mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.success", gameProfile.getName()));
             } else {
-                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.fail"));
+                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.failed"));
             }
         }
 
