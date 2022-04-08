@@ -48,11 +48,12 @@ The mod requires the following mods:
 
 ## Configuring Ngrok-LAN
 
-| **Field**              | **Description**                                              |
-|------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
-| **"Enabled?"**         | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
-| **"Ngrok Auth Token"** | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
-| **"Region"**           | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
+| **Field**                   | **Description**                                              |
+|-----------------------------|--------------------------------------------------------------------------------------------------------------------------------------------|
+| **"Enabled?"**              | This will enable/disable the mod, so you can configure whether the world is shared with Ngrok                                              |
+| **"Ngrok Auth Token"**      | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
+| **"Region"**                | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
+| **"Require Authentication"**| Ticking this box will start the server in online mode. If this box is unchecked, the server will be started in offline mode. This is mainly for when the other players are using cracked Minecraft accounts. |
 
 ### Ngrok Regions
 
