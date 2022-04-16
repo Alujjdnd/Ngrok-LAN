@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "ngroklan",
-  "version": "${version}",
+  "version": "1.4.1",
 
   "name": "Ngrok LAN",
   "description": "Exposes your local LAN server to the internet with Ngrok.",
