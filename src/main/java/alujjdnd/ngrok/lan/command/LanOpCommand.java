@@ -10,6 +10,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.server.OperatorEntry;
 import net.minecraft.server.OperatorList;
+import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -33,22 +34,17 @@ public class LanOpCommand {
         NgrokLan.LOGGER.info("/op called"); //for debugging
         Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "players");
 
-        OperatorList ops = ctx.getSource().getServer().getPlayerManager().getOpList();
+        PlayerManager playerManager = ctx.getSource().getServer().getPlayerManager();
 
 
 
         for(ServerPlayerEntity playerToOp: targets){
             GameProfile gameProfile = playerToOp.getGameProfile();
+            if(!playerManager.isOperator(gameProfile)){
+                playerManager.addToOperators(gameProfile);
 
-            if(ops.get(gameProfile) == null){
-                ops.add(new OperatorEntry(gameProfile, 3, false) );
-                //bypassPlayerLimit -> allow player to join when server is full (not sure if it kicks people)
+                ctx.getSource().sendFeedback(new TranslatableText("commands.op.success", gameProfile.getName()), true);
 
-                TranslatableText message = new TranslatableText("commands.op.success", gameProfile.getName());
-
-                ctx.getSource().sendFeedback(message, true);
-
-                mc.inGameHud.getChatHud().addMessage(message);
             }
             else{
                 mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.op.fail"));
