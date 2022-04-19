@@ -1,55 +1,52 @@
 package alujjdnd.ngrok.lan.command;
 
-import alujjdnd.ngrok.lan.NgrokLan;
 import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.server.OperatorEntry;
-import net.minecraft.server.OperatorList;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.TranslatableText;
 
 import java.util.Collection;
 
 public class LanDeopCommand {
+    private static final SimpleCommandExceptionType ALREADY_DEOPPED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.deop.failed"));
 
-    static MinecraftClient mc = MinecraftClient.getInstance();
-
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("deop")
-                .requires(source -> source.hasPermissionLevel(4))
-                .then(CommandManager.argument("players", EntityArgumentType.players()).executes(LanDeopCommand::execute))
-        );
+    public LanDeopCommand() {
     }
 
-    private static int execute(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        NgrokLan.LOGGER.info("/deop called"); //for debugging
-        Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "players");
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+        dispatcher.register((LiteralArgumentBuilder)((LiteralArgumentBuilder) CommandManager.literal("deop").requires((source) -> {
+            return source.hasPermissionLevel(3);
+        })).then(CommandManager.argument("targets", GameProfileArgumentType.gameProfile()).suggests((context, builder) -> {
+            return CommandSource.suggestMatching((context.getSource()).getServer().getPlayerManager().getOpNames(), builder);
+        }).executes((context) -> {
+            return deop(context.getSource(), GameProfileArgumentType.getProfileArgument(context, "targets"));
+        })));
+    }
 
-        PlayerManager playerManager = ctx.getSource().getServer().getPlayerManager();
+    private static int deop(ServerCommandSource source, Collection<GameProfile> targets) throws CommandSyntaxException {
+        PlayerManager playerManager = source.getServer().getPlayerManager();
+        int i = 0;
 
-
-        for (ServerPlayerEntity playerToOp : targets) {
-            GameProfile gameProfile = playerToOp.getGameProfile();
-
+        for (GameProfile gameProfile : targets) {
             if (playerManager.isOperator(gameProfile)) {
                 playerManager.removeFromOperators(gameProfile);
-
-                ctx.getSource().sendFeedback(new TranslatableText("commands.deop.success", gameProfile.getName()), true);
-            } else {
-                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.deop.failed"));
+                ++i;
+                source.sendFeedback(new TranslatableText("commands.deop.success", ((GameProfile) targets.iterator().next()).getName()), true);
             }
         }
 
-        return Command.SINGLE_SUCCESS;
+        if (i == 0) {
+            throw ALREADY_DEOPPED_EXCEPTION.create();
+        } else {
+            source.getServer().kickNonWhitelistedPlayers(source);
+            return i;
+        }
     }
 }
-
-

@@ -1,56 +1,56 @@
 package alujjdnd.ngrok.lan.command;
 
-import alujjdnd.ngrok.lan.NgrokLan;
 import com.mojang.authlib.GameProfile;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.server.OperatorEntry;
-import net.minecraft.server.OperatorList;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.command.CommandSource;
+import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
 
 import java.util.Collection;
 
 public class LanOpCommand {
+    private static final SimpleCommandExceptionType ALREADY_OPPED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.op.failed"));
 
-    static MinecraftClient mc = MinecraftClient.getInstance();
-
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("op")
-                .requires(source -> source.hasPermissionLevel(4))
-                .then(CommandManager.argument("players", EntityArgumentType.players()).executes(LanOpCommand::execute))
-        );
+    public LanOpCommand() {
     }
 
-    private static int execute(CommandContext<ServerCommandSource> ctx) throws CommandSyntaxException {
-        NgrokLan.LOGGER.info("/op called"); //for debugging
-        Collection<ServerPlayerEntity> targets = EntityArgumentType.getPlayers(ctx, "players");
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+        dispatcher.register((LiteralArgumentBuilder)((LiteralArgumentBuilder) CommandManager.literal("op").requires((source) -> {
+            return source.hasPermissionLevel(3);
+        })).then(CommandManager.argument("targets", GameProfileArgumentType.gameProfile()).suggests((context, builder) -> {
+            PlayerManager playerManager = (context.getSource()).getServer().getPlayerManager();
+            return CommandSource.suggestMatching(playerManager.getPlayerList().stream().filter((player) -> {
+                return !playerManager.isOperator(player.getGameProfile());
+            }).map((player) -> {
+                return player.getGameProfile().getName();
+            }), builder);
+        }).executes((context) -> {
+            return op(context.getSource(), GameProfileArgumentType.getProfileArgument(context, "targets"));
+        })));
+    }
 
-        PlayerManager playerManager = ctx.getSource().getServer().getPlayerManager();
+    private static int op(ServerCommandSource source, Collection<GameProfile> targets) throws CommandSyntaxException {
+        PlayerManager playerManager = source.getServer().getPlayerManager();
+        int i = 0;
 
-
-
-        for(ServerPlayerEntity playerToOp: targets){
-            GameProfile gameProfile = playerToOp.getGameProfile();
-            if(!playerManager.isOperator(gameProfile)){
+        for (GameProfile gameProfile : targets) {
+            if (!playerManager.isOperator(gameProfile)) {
                 playerManager.addToOperators(gameProfile);
-
-                ctx.getSource().sendFeedback(new TranslatableText("commands.op.success", gameProfile.getName()), true);
-
-            }
-            else{
-                mc.inGameHud.getChatHud().addMessage(new TranslatableText("commands.op.fail"));
+                ++i;
+                source.sendFeedback(new TranslatableText("commands.op.success", ((GameProfile) targets.iterator().next()).getName()), true);
             }
         }
 
-        return Command.SINGLE_SUCCESS;
+        if (i == 0) {
+            throw ALREADY_OPPED_EXCEPTION.create();
+        } else {
+            return i;
+        }
     }
 }
