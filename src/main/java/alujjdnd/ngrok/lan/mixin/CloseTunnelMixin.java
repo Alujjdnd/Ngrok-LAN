@@ -14,7 +14,9 @@ public abstract class CloseTunnelMixin {
     @Inject(at = @At("TAIL"), method = "shutdown")
     private void afterShutdownServer(CallbackInfo info) {
         NgrokLan.LOGGER.info("Closing Lan!");
-        NgrokLan.ngrokClient.kill();
+        if (NgrokLan.ngrokClient != null) {
+            NgrokLan.ngrokClient.kill();
+        }
     }
 
 }
