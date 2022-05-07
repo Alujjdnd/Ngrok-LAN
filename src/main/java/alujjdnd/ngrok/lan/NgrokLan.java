@@ -26,6 +26,8 @@ public class NgrokLan implements ModInitializer {
 
 	public static NgrokClient ngrokClient;
 
+	public static boolean serverOpen = false;
+
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.

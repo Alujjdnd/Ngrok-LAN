@@ -17,4 +17,6 @@ public class NLanConfig implements ConfigData
 
     public boolean onlineCheckBox = true;
 
+    public int spawnProtectionRadius = 16;
+
 }

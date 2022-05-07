@@ -3,6 +3,7 @@
     "text.autoconfig.ngroklan.option.authToken": "Ngrok Authentication Token",
     "text.autoconfig.ngroklan.option.enabledCheckBox": "Enable Mod?",
     "text.autoconfig.ngroklan.option.onlineCheckBox": "Require Authentication",
+    "text.autoconfig.ngroklan.option.spawnProtectionRadius": "Spawn Protection Radius",
     "text.autoconfig.ngroklan.option.regionSelect": "Ngrok Region",
     "text.UI.ngroklan.LanButton": "Open Public Server",
     "text.UI.ngroklan.onlineButton": "Online Mode",
