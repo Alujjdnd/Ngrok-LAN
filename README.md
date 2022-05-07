@@ -14,6 +14,10 @@
   <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
 </div>
 
+## Help Needed!
+We are trying to port this mod to QuiltMC, to slowly move away from Fabric. If anyone is knowledgeable in porting mods to QuiltMC or in QuiltMC in general, please reach out! We would greatly appreciate your help!
+
+## Introduction
 Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via
 clicking on the new "Open Public Server" button! This mod uses Ngrok, a free service to ease the creation of servers, as
 the main service to "tunnel" your connection to the internet, and will generate a link for your friends to connect to
