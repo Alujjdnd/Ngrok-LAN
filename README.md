@@ -58,6 +58,7 @@ The mod requires the following mods:
 | **"Ngrok Auth Token"**      | This is the field to input your Ngrok auth token, see [getting your auth token](#getting-your-ngrok-auth-token)                            |
 | **"Region"**                | This is where you can select the region of the Ngrok datacenter that you wish to use, use ones that are closest to you to minimise latency |
 | **"Require Authentication"**| Ticking this box will start the server in online mode. If this box is unchecked, the server will be started in offline mode. This is mainly for when the other players are using cracked Minecraft accounts. |
+| **"Spawn Protection Radius"**| Prevents non-opped players from breaking and placing blocks within `X` blocks of spawn |
 
 ### Ngrok Regions
 
@@ -87,6 +88,12 @@ The mod requires the following mods:
 1. Go to https://ngrok.com/, and sign up for a new free account
 2. On the dashboard, on your left-hand side menu, click on Getting Started > Your Auth Token
 3. Copy the auth token, and put this into Ngrok LAN _(don't share this token with other people)_
+
+## Commands
+| **Command**        | **Description**                                      |
+|--------------------|------------------------------------------------------|
+| `/op <username>`   | Gives the specified player server operator status    |
+| `/deop <username>` | Removes server operator status from specified player |
 
 # Common Issues
 
@@ -130,10 +137,9 @@ More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
 
 # TODO
 
-- Add ModRinth and CurseForge integration
-- Add meta description for ~~CurseForge~~ and ModMenu information
-- Specify dependencies
 - Add list of incompatible mods
+- Port to QuiltMC (Please reach out and help us!)
+- 1.17.1 Build
 
 # License
 
