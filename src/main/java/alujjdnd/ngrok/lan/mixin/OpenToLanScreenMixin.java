@@ -15,9 +15,8 @@ import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.NetworkUtils;
-import net.minecraft.text.LiteralText;
-import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
 import org.spongepowered.asm.mixin.Mixin;
@@ -104,7 +103,10 @@ public class OpenToLanScreenMixin extends Screen {
 
                     // Print in chat the status of the tunnel, and the details copied to the clipboard
                     mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.info.ngroklan.success").formatted(Formatting.GREEN));
-                    mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.ip", ("\u00a7e" + ngrok_url + "\u00a7f")));
+
+                    Text copyText = Texts.bracketed((new LiteralText(ngrok_url)).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ngrok_url)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.copy.click"))).withInsertion(ngrok_url)));
+                    mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.ip", copyText));
+
                     mc.keyboard.setClipboard(ngrok_url);
 
                     NgrokLan.serverOpen = true;
