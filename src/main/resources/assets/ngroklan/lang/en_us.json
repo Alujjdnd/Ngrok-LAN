@@ -12,5 +12,6 @@
     "text.info.ngroklan.startMessage": "Starting Ngrok Service...",
     "text.info.ngroklan.success" : "Ngrok Service Initiated Successfully!",
     "text.info.ngroklan.ip" : "Your server IP is - %s - (Copied to Clipboard)",
-    "text.error.ngroklan.fail" : "Ngrok Service Initiation Failed!"
+    "text.error.ngroklan.fail" : "Ngrok Service Initiation Failed!",
+    "text.title.ngroklan.window" : "Minecraft* 1.18.2 - Multiplayer (Ngrok-LAN)"
 }
