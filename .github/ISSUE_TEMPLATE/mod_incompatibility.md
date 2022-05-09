@@ -8,7 +8,7 @@ assignees: Alujjdnd, Flooflez
 ---
 
 **Name of Mod**
-A clear and concise description of what the bug is.
+Mod Name
 
 **Link to Mod Source**
 NOTE: IF THE MOD DOES NOT HAVE A SOURCE, WE ARE UNLIKELY TO BE ABLE TO FIX IT.
