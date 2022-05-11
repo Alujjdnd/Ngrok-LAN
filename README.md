@@ -135,9 +135,12 @@ supported in this mod.
 
 More pricing info please refer to [Ngrok's website](https://ngrok.com/pricing)
 
+## Known Incompatibilities
+Please refer to [Incompatibilities](https://github.com/Alujjdnd/Ngrok-LAN/labels/incompatibility) to find a list of incompatible mods.
+  </br>Currently, only Proximity Voice Chat mods are incompatible. This is unlikely to be fixed.
+  
 # TODO
 
-- Add list of incompatible mods
 - Port to QuiltMC (Please reach out and help us!)
 - 1.17.1 Build
 
