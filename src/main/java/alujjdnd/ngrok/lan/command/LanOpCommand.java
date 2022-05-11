@@ -43,7 +43,7 @@ public class LanOpCommand {
             if (!playerManager.isOperator(gameProfile)) {
                 playerManager.addToOperators(gameProfile);
                 ++i;
-                source.sendFeedback(new TranslatableText("commands.op.success", ((GameProfile) targets.iterator().next()).getName()), true);
+                source.sendFeedback(new TranslatableText("commands.op.success", targets.iterator().next().getName()), true);
             }
         }
 
