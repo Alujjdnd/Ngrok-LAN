@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.NetworkUtils;
+import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.world.GameMode;
@@ -108,7 +109,7 @@ public class OpenToLanScreenMixin extends Screen {
 
                     mc.keyboard.setClipboard(ngrok_url);
 
-                    NgrokLan.serverOpen = true;
+
 
                     // This starts the LAN server and greys out the open to lan button
                     TranslatableText text;
@@ -117,8 +118,23 @@ public class OpenToLanScreenMixin extends Screen {
                     if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
                         mc.getServer().setOnlineMode(config.onlineCheckBox);
                         text = new TranslatableText("commands.publish.started", port);
+                        NgrokLan.serverOpen = true;
+
+                        //TODO: make sure this works, I make a new thread that reads the json files to update the oplist and whitelist in the playermanager
+                        Thread thread2 = new Thread(() -> {
+                            boolean result = loadJson();
+                            if(!result){
+                                Text commandText = Texts.bracketed((new TranslatableText("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("text.info.ngroklan.reload.prompt")))));
+                                mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.message"));
+                                mc.inGameHud.getChatHud().addMessage(commandText);
+                            }
+                        });
+
+                        thread2.start();
+
                     } else {
                         text = new TranslatableText("commands.publish.failed");
+                        NgrokLan.serverOpen = false;
                     }
                     this.client.inGameHud.getChatHud().addMessage(text);
                     this.client.updateWindowTitle();
@@ -136,6 +152,42 @@ public class OpenToLanScreenMixin extends Screen {
         // This starts the thread defined above
         thread.start();
 
+    }
+
+    private boolean loadJson(){
+        int i;
+        boolean bl3 = false;
+
+        for(i = 0; !bl3 && i <= 2; ++i) {
+            if (i > 0) {
+                NgrokLan.LOGGER.warn("Encountered a problem while converting the op list, retrying in a few seconds");
+                this.sleepFiveSeconds();
+            }
+
+            bl3 = ServerConfigHandler.convertOperators(this.client.getServer());
+            //fail is false
+        }
+
+        boolean bl4 = false;
+
+        for(i = 0; !bl4 && i <= 2; ++i) {
+            if (i > 0) {
+                NgrokLan.LOGGER.warn("Encountered a problem while converting the whitelist, retrying in a few seconds");
+                this.sleepFiveSeconds();
+            }
+
+            bl4 = ServerConfigHandler.convertWhitelist(this.client.getServer());
+            //fail is false
+        }
+
+        return bl3 && bl4;
+    }
+
+    private void sleepFiveSeconds() {
+        try {
+            Thread.sleep(5000L);
+        } catch (InterruptedException var2) {
+        }
     }
 
 }

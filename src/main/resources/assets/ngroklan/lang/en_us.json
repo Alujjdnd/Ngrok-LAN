@@ -13,5 +13,8 @@
     "text.info.ngroklan.success" : "Ngrok Service Initiated Successfully!",
     "text.info.ngroklan.ip" : "Your server IP is - %s - (Copied to Clipboard)",
     "text.error.ngroklan.fail" : "Ngrok Service Initiation Failed!",
-    "text.title.ngroklan.window" : "Minecraft* 1.18.2 - Multiplayer (Ngrok-LAN)"
+    "text.title.ngroklan.window" : "Minecraft* 1.18.2 - Multiplayer (Ngrok-LAN)",
+    "text.info.ngroklan.click.reload" : "Click to reload whitelist and op list",
+    "text.info.ngroklan.reload.prompt" : "Click here to reload",
+    "text.info.ngroklan.reload.message" : "An error occurred loading the whitelist and op list."
 }

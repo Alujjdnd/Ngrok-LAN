@@ -3,6 +3,7 @@ package alujjdnd.ngrok.lan;
 
 import alujjdnd.ngrok.lan.command.LanDeopCommand;
 import alujjdnd.ngrok.lan.command.LanOpCommand;
+import alujjdnd.ngrok.lan.command.LanWhitelistCommand;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -27,6 +28,7 @@ public class NgrokServerInitialiser implements DedicatedServerModInitializer
         {
             LanOpCommand.register(dispatcher);
             LanDeopCommand.register(dispatcher);
+            LanWhitelistCommand.register(dispatcher);
         });
     }
 

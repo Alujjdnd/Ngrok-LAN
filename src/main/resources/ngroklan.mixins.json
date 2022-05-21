@@ -4,7 +4,7 @@
   "package": "alujjdnd.ngrok.lan.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "SpawnProtectionMixin",
+    "PlayerManagerMixin",
     "WindowTitleMixin"
   ],
   "client": [

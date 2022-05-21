@@ -2,6 +2,7 @@ package alujjdnd.ngrok.lan;
 
 import alujjdnd.ngrok.lan.command.LanDeopCommand;
 import alujjdnd.ngrok.lan.command.LanOpCommand;
+import alujjdnd.ngrok.lan.command.LanWhitelistCommand;
 import com.github.alexdlaird.ngrok.NgrokClient;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -42,6 +43,7 @@ public class NgrokLan implements ModInitializer {
 		{
 			LanOpCommand.register(dispatcher);
 			LanDeopCommand.register(dispatcher);
+			LanWhitelistCommand.register(dispatcher);
 		});
 	}
 
