@@ -143,6 +143,7 @@ Please refer to [Incompatibilities](https://github.com/Alujjdnd/Ngrok-LAN/labels
 
 - Port to QuiltMC (Please reach out and help us!)
 - 1.17.1 Build
+- Add Whitelist and Blacklist Functionality
 
 # License
 
