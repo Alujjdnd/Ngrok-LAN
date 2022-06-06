@@ -92,8 +92,14 @@ The mod requires the following mods:
 ## Commands
 | **Command**        | **Description**                                      |
 |--------------------|------------------------------------------------------|
-| `/op <username>`   | Gives the specified player server operator status    |
-| `/deop <username>` | Removes server operator status from specified player |
+| `/op <username>`   | Gives the specified player server operator status.    |
+| `/deop <username>` | Removes server operator status from specified player. |
+| `/whitelist add <username>` | Adds the player profile(s) to the whitelist. The player does not need to be online. |
+| `/whitelist on` | Enables the server's use of a whitelist. |
+| `/whitelist off` | Disables the server's use of a whitelist. |
+| `/whitelist remove` | Removes the player profile(s) from the whitelist. The player does not need to be online. |
+| `/whitelist list` | Displays all player profiles in the whitelist. |
+| `/whitelist reload <username>` | Reloads the list of player profiles in whitelist.json from disk (used when whitelist.json has been modified outside of Minecraft). |
 
 # Common Issues
 
