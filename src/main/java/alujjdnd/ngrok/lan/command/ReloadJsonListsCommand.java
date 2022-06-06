@@ -6,8 +6,10 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.argument.GameProfileArgumentType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.server.command.CommandManager;
@@ -25,43 +27,25 @@ public class ReloadJsonListsCommand {
     public ReloadJsonListsCommand() {
     }
 
-    //TODO: this is literally /op rn just need to change it
-    public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(CommandManager.literal("reloadngroklanlists")
                 .requires(source -> source.hasPermissionLevel(3))
                 .executes(ReloadJsonListsCommand::loadJson));
     }
 
     private static int loadJson(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) throws CommandSyntaxException {
-        ServerCommandSource source = serverCommandSourceCommandContext.getSource();
+        MinecraftServer server = serverCommandSourceCommandContext.getSource().getServer();
 
-        int i;
-        boolean bl3 = false;
+        boolean bl3 = ServerConfigHandler.convertOperators(server);
 
-        for(i = 0; !bl3 && i <= 2; ++i) {
-            if (i > 0) {
-                NgrokLan.LOGGER.warn("Encountered a problem while converting the op list, retrying in a few seconds");
-                ReloadJsonListsCommand.sleepFiveSeconds();
-            }
+        boolean bl4 = ServerConfigHandler.convertWhitelist(server);
 
-            bl3 = ServerConfigHandler.convertOperators(source.getServer());
-            //fail is false
-        }
-
-        boolean bl4 = false;
-
-        for(i = 0; !bl4 && i <= 2; ++i) {
-            if (i > 0) {
-                NgrokLan.LOGGER.warn("Encountered a problem while converting the whitelist, retrying in a few seconds");
-                ReloadJsonListsCommand.sleepFiveSeconds();
-            }
-
-            bl4 = ServerConfigHandler.convertWhitelist(source.getServer());
-            //fail is false
-        }
 
         if(! (bl3 && bl4) ){
             throw LOAD_JSON_EXCEPTION.create();
+        }
+        else{
+            MinecraftClient.getInstance().inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.success"));
         }
 
         return 1;

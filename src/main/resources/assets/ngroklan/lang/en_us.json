@@ -16,5 +16,6 @@
     "text.title.ngroklan.window" : "Minecraft* 1.18.2 - Multiplayer (Ngrok-LAN)",
     "text.info.ngroklan.click.reload" : "Click to reload whitelist and op list",
     "text.info.ngroklan.reload.prompt" : "Click here to reload",
-    "text.info.ngroklan.reload.message" : "An error occurred loading the whitelist and op list."
+    "text.info.ngroklan.reload.message" : "An error occurred loading the whitelist and op list",
+    "text.info.ngroklan.reload.success" : "The whitelist and op list were successfully loaded"
 }

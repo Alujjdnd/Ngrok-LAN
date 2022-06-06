@@ -122,14 +122,21 @@ public class OpenToLanScreenMixin extends Screen {
 
                         //TODO: make sure this works, I make a new thread that reads the json files to update the oplist and whitelist in the playermanager
                         Thread thread2 = new Thread(() -> {
+
+                            NgrokLan.LOGGER.info("debug THREAD2 STARTED");
+
                             boolean result = loadJson();
                             if(!result){
                                 Text commandText = Texts.bracketed((new TranslatableText("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("text.info.ngroklan.reload.prompt")))));
                                 mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.message"));
                                 mc.inGameHud.getChatHud().addMessage(commandText);
                             }
+                            else{
+                                mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.success"));
+                            }
                         });
 
+                        NgrokLan.LOGGER.info("debug THREAD2 STARTING");
                         thread2.start();
 
                     } else {
@@ -155,6 +162,8 @@ public class OpenToLanScreenMixin extends Screen {
     }
 
     private boolean loadJson(){
+        NgrokLan.LOGGER.info("debug LOADING JSON");
+
         int i;
         boolean bl3 = false;
 
