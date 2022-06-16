@@ -18,7 +18,6 @@ import net.minecraft.client.util.NetworkUtils;
 import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
-import net.minecraft.util.TranslatableOption;
 import net.minecraft.world.GameMode;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,7 +45,7 @@ public class OpenToLanScreenMixin extends Screen {
     private void initWidgets(CallbackInfo info) {
 
         if (config.enabledCheckBox) { //if mod enabled in mod menu
-            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, Text.translatable("text.UI.ngroklan.LanButton"), (button) -> {
+            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, new TranslatableText("text.UI.ngroklan.LanButton"), (button) -> {
                 int localPort = NetworkUtils.findLocalPort(); // part of the minecraft Networkutils class, finds an available local port (this was from the openToLan class)
                 this.client.setScreen(null); // Removed all elements from the screen (this closes all menu windows)
                 switch (config.regionSelect) {
@@ -71,16 +70,14 @@ public class OpenToLanScreenMixin extends Screen {
         {
             if (config.authToken.equals("AuthToken")) {
                 // Check if authToken field has actually been changed, if not, print this text in chat
-                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError"));
-                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError").formatted(Formatting.RED));
+                mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.AuthTokenError"));
+                mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.AuthTokenError").formatted(Formatting.RED));
                 //\u00a7c
-                NgrokLan.LOGGER.info("Launched Lan UNSUCCESSFUL");
             } else {
                 try {
                     NgrokLan.LOGGER.info("Launched Lan!");
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("test!").formatted(Formatting.RED));
 
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.startMessage").formatted(Formatting.YELLOW));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.info.ngroklan.startMessage").formatted(Formatting.YELLOW));
 
 
                     // Java-ngrok wrapper code, to initiate the tunnel, with the authoken, region
@@ -105,21 +102,22 @@ public class OpenToLanScreenMixin extends Screen {
                     var ngrok_url = tunnel.getPublicUrl().substring(6);
 
                     // Print in chat the status of the tunnel, and the details copied to the clipboard
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.success").formatted(Formatting.GREEN));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.info.ngroklan.success").formatted(Formatting.GREEN));
 
-                    Text copyText = Texts.bracketed((Text.translatable(ngrok_url)).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ngrok_url)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("chat.copy.click"))).withInsertion(ngrok_url)));
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.ip", copyText));
+                    Text copyText = Texts.bracketed((new LiteralText(ngrok_url)).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, ngrok_url)).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("chat.copy.click"))).withInsertion(ngrok_url)));
+                    mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.ip", copyText));
 
                     mc.keyboard.setClipboard(ngrok_url);
 
 
 
                     // This starts the LAN server and greys out the open to lan button
-                    MutableText textStart;
+                    TranslatableText text;
+
 
                     if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
                         mc.getServer().setOnlineMode(config.onlineCheckBox);
-                        textStart = Text.translatable("commands.publish.started", port);
+                        text = new TranslatableText("commands.publish.started", port);
                         NgrokLan.serverOpen = true;
 
                         //TODO: make sure this works, I make a new thread that reads the json files to update the oplist and whitelist in the playermanager
@@ -129,12 +127,12 @@ public class OpenToLanScreenMixin extends Screen {
 
                             boolean result = loadJson();
                             if(!result){
-                                Text commandText = Texts.bracketed((Text.translatable("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("text.info.ngroklan.reload.prompt")))));
-                                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.message"));
+                                Text commandText = Texts.bracketed((new TranslatableText("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new TranslatableText("text.info.ngroklan.reload.prompt")))));
+                                mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.message"));
                                 mc.inGameHud.getChatHud().addMessage(commandText);
                             }
                             else{
-                                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success"));
+                                mc.inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.success"));
                             }
                         });
 
@@ -142,16 +140,16 @@ public class OpenToLanScreenMixin extends Screen {
                         thread2.start();
 
                     } else {
-                        textStart = Text.translatable("commands.publish.failed");
+                        text = new TranslatableText("commands.publish.failed");
                         NgrokLan.serverOpen = false;
                     }
-                    this.client.inGameHud.getChatHud().addMessage(textStart);
+                    this.client.inGameHud.getChatHud().addMessage(text);
                     this.client.updateWindowTitle();
 
                 } catch (Exception error) {
                     error.printStackTrace();
-                    mc.inGameHud.getChatHud().addMessage(Text.literal(error.getMessage()));
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.fail").formatted(Formatting.RED));
+                    mc.inGameHud.getChatHud().addMessage(new LiteralText(error.getMessage()));
+                    mc.inGameHud.getChatHud().addMessage(new TranslatableText("text.error.ngroklan.fail").formatted(Formatting.RED));
                     //ngrokInitiated = false;
                     throw new RuntimeException("Ngrok Service Failed to Start" + error.getMessage());
                 }

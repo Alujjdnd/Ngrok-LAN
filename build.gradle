@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '0.11-SNAPSHOT'
+	id 'fabric-loom' version '0.12-SNAPSHOT'
 	id 'maven-publish'
 	id 'com.github.johnrengelman.shadow' version '7.1.2'
     id 'java'
@@ -40,13 +40,13 @@ dependencies {
 
 	modImplementation(include("org.yaml:snakeyaml:1.8"))
 
-	modApi("me.shedaniel.cloth:cloth-config-fabric:4.11.14") {
+	modApi("me.shedaniel.cloth:cloth-config-fabric:7.0.72") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
 	modImplementation(include("blue.endless:jankson:1.2.1"))
 
-	modImplementation(include("com.terraformersmc:modmenu:3.1.0"))
+	modImplementation(include("com.terraformersmc:modmenu:4.0.0"))
 }
 
 processResources {

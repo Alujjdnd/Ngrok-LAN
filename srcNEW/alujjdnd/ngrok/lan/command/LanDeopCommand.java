@@ -10,7 +10,7 @@ import net.minecraft.command.argument.GameProfileArgumentType;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.text.TranslatableText;
 
 import java.util.Collection;
 
@@ -38,7 +38,7 @@ public class LanDeopCommand {
             if (playerManager.isOperator(gameProfile)) {
                 playerManager.removeFromOperators(gameProfile);
                 ++i;
-                source.sendFeedback(Text.translatable("commands.deop.success", targets.iterator().next().getName()), true);
+                source.sendFeedback(new TranslatableText("commands.deop.success", targets.iterator().next().getName()), true);
             }
         }
 

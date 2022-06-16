@@ -38,7 +38,7 @@ public class LanDeopCommand {
             if (playerManager.isOperator(gameProfile)) {
                 playerManager.removeFromOperators(gameProfile);
                 ++i;
-                source.sendFeedback(Text.translatable("commands.deop.success", targets.iterator().next().getName()), true);
+                source.sendFeedback(new TranslatableText("commands.deop.success", targets.iterator().next().getName()), true);
             }
         }
 
