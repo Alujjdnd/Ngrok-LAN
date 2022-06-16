@@ -1,4 +1,4 @@
-![Ngrok LAN Banner](https://github.com/Alujjdnd/Ngrok-LAN/blob/main/docs/assets/banner.png?raw=true)
+![Ngrok LAN Banner](https://github.com/Alujjdnd/Ngrok-LAN/blob/1.18.2/docs/assets/banner.png?raw=true)
 
 <h1 align="center">
   Ngrok LAN
@@ -11,7 +11,7 @@
   <a href="https://www.codacy.com/gh/Alujjdnd/Ngrok-LAN/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Alujjdnd/Ngrok-LAN&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/b38f7148f2934ad8b6d4413b70a173fd"/></a>
   <img alt="GitHub commit activity" src="https://img.shields.io/github/commit-activity/m/alujjdnd/ngrok-lan">
   </br>
-  <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/OSSrs.png>
+  <img src=https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/1.18.2/docs/assets/OSSrs.png>
 </div>
 
 ## Help Needed!
@@ -26,7 +26,7 @@ after you click on "Open Public Server".
 For more on how Ngrok-LAN works, check out [What is Ngrok](#what-is-ngrok).
 
 <div align="center">
-  <img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/demo.gif" alt="Network Diagram" width="70%"/>
+  <img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/1.18.2/docs/assets/demo.gif" alt="Network Diagram" width="70%"/>
 </div>
 
 # Installation/Quick Start
@@ -129,7 +129,7 @@ friends to connect to our server. This doesn't require any other configuration o
 internet, and an Ngrok account, you can host your singleplayer world to your friends across the globe.
 
 <div align="center">
-<img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/main/docs/assets/Network.jpg" alt="Network Diagram" width="80%"/>
+<img src="https://raw.githubusercontent.com/Alujjdnd/Ngrok-LAN/1.18.2/docs/assets/Network.jpg" alt="Network Diagram" width="80%"/>
 </div>
 
 ## Ngrok Account Requirements
