@@ -74,7 +74,6 @@ public class OpenToLanScreenMixin extends Screen {
         {
             if (config.authToken.equals("AuthToken")) {
                 // Check if authToken field has actually been changed, if not, print this text in chat
-                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError"));
                 mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError").formatted(Formatting.RED));
                 //\u00a7c
                 NgrokLan.LOGGER.error("Launched Lan UNSUCCESSFUL");
