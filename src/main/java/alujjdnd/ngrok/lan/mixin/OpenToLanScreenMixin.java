@@ -15,7 +15,10 @@ import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.NetworkUtils;
+import net.minecraft.server.OperatorList;
+import net.minecraft.server.PlayerManager;
 import net.minecraft.server.ServerConfigHandler;
+import net.minecraft.server.Whitelist;
 import net.minecraft.text.*;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.TranslatableOption;
@@ -120,18 +123,18 @@ public class OpenToLanScreenMixin extends Screen {
                         textStart = Text.translatable("commands.publish.started", port);
                         NgrokLan.serverOpen = true;
 
-                        //TODO: make sure this works, I make a new thread that reads the json files to update the oplist and whitelist in the playermanager
+                        //I made a new thread that reads the json files to update the oplist and whitelist in the playermanager
                         Thread thread2 = new Thread(() -> {
 
 
-                            boolean result = loadJson();
-                            if(!result){
-                                Text commandText = Texts.bracketed((Text.translatable("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.YELLOW).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("text.info.ngroklan.reload.prompt")))));
-                                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.message"));
-                                mc.inGameHud.getChatHud().addMessage(commandText);
+                            boolean loaded = loadJson();
+                            if(loaded){
+                                MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success").styled(style -> style.withColor(Formatting.GREEN) ));
                             }
                             else{
-                                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success"));
+                                Text commandText = Texts.bracketed((Text.translatable("text.info.ngroklan.reload.prompt")).styled((style) -> style.withColor(Formatting.RED).withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/reloadngroklanlists")).withHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, Text.translatable("text.info.ngroklan.reload.prompt")))));
+                                mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.message"));
+                                mc.inGameHud.getChatHud().addMessage(commandText);
                             }
                         });
 
@@ -160,41 +163,23 @@ public class OpenToLanScreenMixin extends Screen {
     }
 
     private boolean loadJson(){
-        NgrokLan.LOGGER.info("debug LOADING JSON");
+        PlayerManager playerManager = this.client.getServer().getPlayerManager();
 
-        int i;
-        boolean bl3 = false;
+        Whitelist whitelist = playerManager.getWhitelist();
+        OperatorList opList = playerManager.getOpList();
 
-        for(i = 0; !bl3 && i <= 2; ++i) {
-            if (i > 0) {
-                NgrokLan.LOGGER.warn("Encountered a problem while converting the op list, retrying in a few seconds");
-                this.sleepFiveSeconds();
-            }
-
-            bl3 = ServerConfigHandler.convertOperators(this.client.getServer());
-            //fail is false
-        }
-
-        boolean bl4 = false;
-
-        for(i = 0; !bl4 && i <= 2; ++i) {
-            if (i > 0) {
-                NgrokLan.LOGGER.warn("Encountered a problem while converting the whitelist, retrying in a few seconds");
-                this.sleepFiveSeconds();
-            }
-
-            bl4 = ServerConfigHandler.convertWhitelist(this.client.getServer());
-            //fail is false
-        }
-
-        return bl3 && bl4;
-    }
-
-    private void sleepFiveSeconds() {
         try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException var2) {
+            whitelist.load();
+            opList.load();
+
+
+        } catch (Exception e) {
+            return false;
         }
+
+        return true;
     }
+
+
 
 }

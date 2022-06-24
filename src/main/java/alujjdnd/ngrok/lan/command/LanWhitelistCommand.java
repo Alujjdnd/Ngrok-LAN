@@ -60,7 +60,7 @@ public class LanWhitelistCommand {
     private static int executeReload(ServerCommandSource source) {
         source.getServer().getPlayerManager().reloadWhitelist();
         source.sendFeedback(Text.translatable("commands.whitelist.reloaded"), true);
-        source.getServer().kickNonWhitelistedPlayers(source);
+        kickNonWhitelistedPlayers(source);
         return 1;
     }
 
@@ -100,7 +100,7 @@ public class LanWhitelistCommand {
         if (i == 0) {
             throw REMOVE_FAILED_EXCEPTION.create();
         } else {
-            source.getServer().kickNonWhitelistedPlayers(source);
+            kickNonWhitelistedPlayers(source);
             return i;
         }
     }
@@ -112,7 +112,7 @@ public class LanWhitelistCommand {
         } else {
             playerManager.setWhitelistEnabled(true);
             source.sendFeedback(Text.translatable("commands.whitelist.enabled"), true);
-            source.getServer().kickNonWhitelistedPlayers(source);
+            kickNonWhitelistedPlayers(source);
             return 1;
         }
     }
@@ -138,16 +138,19 @@ public class LanWhitelistCommand {
 
         return strings.length;
     }
-    private static void kickNonWhitelistedPlayers(){
-        if (this.isEnforceWhitelist()) {
-            PlayerManager playerManager = source.getServer().getPlayerManager();
+    private static void kickNonWhitelistedPlayers(ServerCommandSource source){
+        PlayerManager playerManager = source.getServer().getPlayerManager();
+        if (playerManager.isWhitelistEnabled()) {
             Whitelist whitelist = playerManager.getWhitelist();
             List<ServerPlayerEntity> list = Lists.newArrayList(playerManager.getPlayerList());
 
             for (ServerPlayerEntity serverPlayerEntity : list) {
-                if (!whitelist.isAllowed(serverPlayerEntity.getGameProfile())) {
-                    serverPlayerEntity.networkHandler.disconnect(Text.translatable("multiplayer.disconnect.not_whitelisted"));
+                if(!source.getServer().isHost(serverPlayerEntity.getGameProfile())){
+                    if (!whitelist.isAllowed(serverPlayerEntity.getGameProfile())) {
+                        serverPlayerEntity.networkHandler.disconnect(Text.translatable("multiplayer.disconnect.not_whitelisted"));
+                    }
                 }
+
             }
 
         }

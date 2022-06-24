@@ -42,11 +42,4 @@ public class ReloadJsonListsCommand {
         return 1;
     }
 
-
-    private static void sleepFiveSeconds() {
-        try {
-            Thread.sleep(5000L);
-        } catch (InterruptedException ignored) {
-        }
-    }
 }
