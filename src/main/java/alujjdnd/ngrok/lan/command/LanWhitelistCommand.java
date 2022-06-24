@@ -145,8 +145,9 @@ public class LanWhitelistCommand {
             List<ServerPlayerEntity> list = Lists.newArrayList(playerManager.getPlayerList());
 
             for (ServerPlayerEntity serverPlayerEntity : list) {
-                if(!source.getServer().isHost(serverPlayerEntity.getGameProfile())){
-                    if (!whitelist.isAllowed(serverPlayerEntity.getGameProfile())) {
+                GameProfile profile = serverPlayerEntity.getGameProfile();
+                if(!source.getServer().isHost(profile)){
+                    if (!whitelist.isAllowed(profile) && !playerManager.isOperator(profile)) {
                         serverPlayerEntity.networkHandler.disconnect(Text.translatable("multiplayer.disconnect.not_whitelisted"));
                     }
                 }
