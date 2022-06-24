@@ -74,12 +74,10 @@ public class OpenToLanScreenMixin extends Screen {
                 mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError"));
                 mc.inGameHud.getChatHud().addMessage(Text.translatable("text.error.ngroklan.AuthTokenError").formatted(Formatting.RED));
                 //\u00a7c
-                NgrokLan.LOGGER.info("Launched Lan UNSUCCESSFUL");
+                NgrokLan.LOGGER.error("Launched Lan UNSUCCESSFUL");
             } else {
                 try {
                     NgrokLan.LOGGER.info("Launched Lan!");
-                    mc.inGameHud.getChatHud().addMessage(Text.translatable("test!").formatted(Formatting.RED));
-
                     mc.inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.startMessage").formatted(Formatting.YELLOW));
 
 
@@ -125,7 +123,6 @@ public class OpenToLanScreenMixin extends Screen {
                         //TODO: make sure this works, I make a new thread that reads the json files to update the oplist and whitelist in the playermanager
                         Thread thread2 = new Thread(() -> {
 
-                            NgrokLan.LOGGER.info("debug THREAD2 STARTED");
 
                             boolean result = loadJson();
                             if(!result){
@@ -138,7 +135,6 @@ public class OpenToLanScreenMixin extends Screen {
                             }
                         });
 
-                        NgrokLan.LOGGER.info("debug THREAD2 STARTING");
                         thread2.start();
 
                     } else {
