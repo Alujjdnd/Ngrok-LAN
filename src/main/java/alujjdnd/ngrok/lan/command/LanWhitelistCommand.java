@@ -1,5 +1,6 @@
 package alujjdnd.ngrok.lan.command;
 
+import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -12,10 +13,13 @@ import net.minecraft.server.Whitelist;
 import net.minecraft.server.WhitelistEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Texts;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class LanWhitelistCommand {
     private static final SimpleCommandExceptionType ALREADY_ON_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.whitelist.alreadyOn"));
@@ -133,5 +137,19 @@ public class LanWhitelistCommand {
         }
 
         return strings.length;
+    }
+    private static void kickNonWhitelistedPlayers(){
+        if (this.isEnforceWhitelist()) {
+            PlayerManager playerManager = source.getServer().getPlayerManager();
+            Whitelist whitelist = playerManager.getWhitelist();
+            List<ServerPlayerEntity> list = Lists.newArrayList(playerManager.getPlayerList());
+
+            for (ServerPlayerEntity serverPlayerEntity : list) {
+                if (!whitelist.isAllowed(serverPlayerEntity.getGameProfile())) {
+                    serverPlayerEntity.networkHandler.disconnect(Text.translatable("multiplayer.disconnect.not_whitelisted"));
+                }
+            }
+
+        }
     }
 }
