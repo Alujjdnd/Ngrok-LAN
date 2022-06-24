@@ -33,7 +33,7 @@ public class ReloadJsonListsCommand {
         try {
             whitelist.load();
             opList.load();
-            
+
             MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success").styled(style -> style.withColor(Formatting.GREEN) ));
         } catch (Exception e) {
             throw LOAD_JSON_EXCEPTION.create();
