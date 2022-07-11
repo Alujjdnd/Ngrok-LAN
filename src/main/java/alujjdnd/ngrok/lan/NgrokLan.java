@@ -5,8 +5,9 @@ import alujjdnd.ngrok.lan.command.LanOpCommand;
 import alujjdnd.ngrok.lan.command.LanWhitelistCommand;
 import alujjdnd.ngrok.lan.command.ReloadJsonListsCommand;
 import com.github.alexdlaird.ngrok.NgrokClient;
-import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class NgrokLan implements ModInitializer {
 	public static boolean serverOpen = false;
 
 	@Override
-	public void onInitialize() {
+	public void onInitialize(ModContainer mod) {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
@@ -40,7 +41,7 @@ public class NgrokLan implements ModInitializer {
 		AutoConfig.register(NLanConfig.class, JanksonConfigSerializer::new);
 
 		//register commands
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, dedicated) ->
 		{
 			LanOpCommand.register(dispatcher);
 			LanDeopCommand.register(dispatcher);
