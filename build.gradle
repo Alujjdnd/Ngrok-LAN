@@ -1,7 +1,8 @@
 plugins {
-	id 'maven-publish'
 	alias(libs.plugins.quilt.loom)
+	id 'maven-publish'
 	id 'com.github.johnrengelman.shadow' version '7.1.2'
+	id 'java'
 	id "com.modrinth.minotaur" version "2.+"
 }
 
@@ -33,20 +34,15 @@ dependencies {
 	// QSL is not a complete API; You will need Quilted Fabric API to fill in the gaps.
 	// Quilted Fabric API will automatically pull in the correct QSL version.
 	modImplementation libs.quilted.fabric.api
-	// modImplementation libs.bundles.quilted.fabric.api // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 
-	//Java-Ngrok, a wrapper for the Ngrok service by providing a handy Java API to call it.
-	modImplementation(include("com.github.alexdlaird:java-ngrok:1.5.6"))
-
-	modImplementation(include("org.yaml:snakeyaml:1.30"))
-
-	modApi("me.shedaniel.cloth:cloth-config-fabric:7.0.72") {
+	// Java-Ngrok, a wrapper for the Ngrok service by providing a handy Java API to call it.
+	modImplementation(include("com.github.alexdlaird:java-ngrok:${libs.versions.java.ngrok.get()}"))
+	// Cloth config
+	modApi("me.shedaniel.cloth:cloth-config-fabric:${libs.versions.cloth.config.get()}") {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
-
-	modImplementation(include("blue.endless:jankson:1.2.1"))
-
-	modImplementation(include("com.terraformersmc:modmenu:4.0.0"))
+	// Mod menu
+	modImplementation(include("com.terraformersmc:modmenu:${libs.versions.modmenu.get()}"))
 }
 
 processResources {
@@ -59,7 +55,6 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
 	it.options.encoding = "UTF-8"
-	// Minecraft 1.18 (1.18-pre2) upwards uses Java 17.
 	it.options.release = 17
 }
 
@@ -81,6 +76,12 @@ java {
 jar {
 	from("LICENSE") {
 		rename { "${it}_${archivesBaseName}" }
+	}
+}
+
+shadowJar {
+	manifest {
+		attributes 'Main-Class': 'com.example.ApplicationKt'
 	}
 }
 
