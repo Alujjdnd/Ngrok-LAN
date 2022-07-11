@@ -14,7 +14,7 @@ import net.minecraft.server.PlayerManager;
 import net.minecraft.server.ServerConfigHandler;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 public class ReloadJsonListsCommand {
 
@@ -22,7 +22,7 @@ public class ReloadJsonListsCommand {
     //run loadJson();
     //get source.getServer() from command
 
-    private static final SimpleCommandExceptionType LOAD_JSON_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("text.info.ngroklan.reload.message"));
+    private static final SimpleCommandExceptionType LOAD_JSON_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("text.info.ngroklan.reload.message"));
 
     public ReloadJsonListsCommand() {
     }
@@ -45,7 +45,7 @@ public class ReloadJsonListsCommand {
             throw LOAD_JSON_EXCEPTION.create();
         }
         else{
-            MinecraftClient.getInstance().inGameHud.getChatHud().addMessage( new TranslatableText("text.info.ngroklan.reload.success"));
+            MinecraftClient.getInstance().inGameHud.getChatHud().addMessage( Text.translatable("text.info.ngroklan.reload.success"));
         }
 
         return 1;

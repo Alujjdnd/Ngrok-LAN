@@ -5,10 +5,12 @@ import alujjdnd.ngrok.lan.command.LanDeopCommand;
 import alujjdnd.ngrok.lan.command.LanOpCommand;
 import alujjdnd.ngrok.lan.command.LanWhitelistCommand;
 import alujjdnd.ngrok.lan.command.ReloadJsonListsCommand;
-import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.server.dedicated.DedicatedServer;
+import org.quiltmc.loader.api.ModContainer;
+import org.quiltmc.qsl.base.api.entrypoint.server.DedicatedServerModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,12 +22,12 @@ public class NgrokServerInitialiser implements DedicatedServerModInitializer
 
     @Override
     // Initialize the differents parts of the mod when lauched on server
-    public void onInitializeServer()
+    public void onInitializeServer(ModContainer mod)
     {
         LOGGER.info("World is Open to LAN with Ngrok LAN");
 
         //register commands
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, dedicated) ->
         {
             LanOpCommand.register(dispatcher);
             LanDeopCommand.register(dispatcher);
