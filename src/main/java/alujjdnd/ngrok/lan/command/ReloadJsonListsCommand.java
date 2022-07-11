@@ -12,34 +12,29 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 
 public class ReloadJsonListsCommand {
+	private static final SimpleCommandExceptionType LOAD_JSON_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("text.info.ngroklan.reload.message"));
 
-    private static final SimpleCommandExceptionType LOAD_JSON_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("text.info.ngroklan.reload.message"));
+	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+		dispatcher.register(CommandManager.literal("reloadngroklanlists")
+				.requires(source -> source.hasPermissionLevel(3))
+				.executes(ReloadJsonListsCommand::loadJson));
+	}
 
-    public ReloadJsonListsCommand() {
-    }
+	private static int loadJson(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) throws CommandSyntaxException {
+		PlayerManager playerManager = serverCommandSourceCommandContext.getSource().getServer().getPlayerManager();
+		Whitelist whitelist = playerManager.getWhitelist();
+		OperatorList opList = playerManager.getOpList();
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(CommandManager.literal("reloadngroklanlists")
-                .requires(source -> source.hasPermissionLevel(3))
-                .executes(ReloadJsonListsCommand::loadJson));
-    }
+		try {
+			whitelist.load();
+			opList.load();
 
-    private static int loadJson(CommandContext<ServerCommandSource> serverCommandSourceCommandContext) throws CommandSyntaxException {
-        PlayerManager playerManager = serverCommandSourceCommandContext.getSource().getServer().getPlayerManager();
+			MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success").styled(style -> style.withColor(Formatting.GREEN) ));
+		}
+		catch (Exception e) {
+			throw LOAD_JSON_EXCEPTION.create();
+		}
 
-        Whitelist whitelist = playerManager.getWhitelist();
-        OperatorList opList = playerManager.getOpList();
-
-        try {
-            whitelist.load();
-            opList.load();
-
-            MinecraftClient.getInstance().inGameHud.getChatHud().addMessage(Text.translatable("text.info.ngroklan.reload.success").styled(style -> style.withColor(Formatting.GREEN) ));
-        } catch (Exception e) {
-            throw LOAD_JSON_EXCEPTION.create();
-        }
-
-        return 1;
-    }
-
+		return 1;
+	}
 }

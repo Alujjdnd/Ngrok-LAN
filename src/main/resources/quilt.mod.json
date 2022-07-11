@@ -1,0 +1,51 @@
+{
+	"schema_version": 1,
+	"quilt_loader": {
+		"group": "alujjdnd.ngrok.lan",
+		"id": "ngroklan",
+		"version": "${version}",
+		"metadata": {
+			"name": "Ngrok LAN",
+			"description": "Exposes your local LAN server to the internet with Ngrok.",
+			"authors": [
+				"Peter Zhang (alujjdnd)",
+				"Flooflez"
+			],
+			"contact": {
+				"homepage": "https://github.com/Alujjdnd/Ngrok-LAN",
+				"sources": "https://github.com/Alujjdnd/Ngrok-LAN",
+				"issues": "https://github.com/Alujjdnd/Ngrok-LAN/issues"
+			},
+
+			"license": "MIT",
+			"icon": "assets/ngroklan/icon.png"
+		},
+		"intermediate_mappings": "net.fabricmc:intermediary",
+		"entrypoints": {
+			"init": [
+				"alujjdnd.ngrok.lan.NgrokLan"
+			],
+			"server": [
+				"alujjdnd.ngrok.lan.NgrokLanServerInitializer"
+			],
+			"modmenu": [
+				"alujjdnd.ngrok.lan.config.ModMenuIntegration"
+			]
+		},
+		"depends": [
+			{
+				"id": "quilt_loader",
+				"versions": ">=0.17.0-"
+			},
+			{
+				"id": "quilted_fabric_api",
+				"versions": ">=2.0.0-"
+			},
+			{
+				"id": "minecraft",
+				"versions": ">=1.19"
+			}
+		]
+	},
+	"mixin": "ngroklan.mixins.json"
+}

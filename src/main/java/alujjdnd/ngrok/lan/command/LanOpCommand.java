@@ -2,7 +2,6 @@ package alujjdnd.ngrok.lan.command;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.CommandSource;
@@ -17,22 +16,19 @@ import java.util.Collection;
 public class LanOpCommand {
     private static final SimpleCommandExceptionType ALREADY_OPPED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.op.failed"));
 
-    public LanOpCommand() {
-    }
-
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register((LiteralArgumentBuilder)((LiteralArgumentBuilder) CommandManager.literal("op").requires((source) -> {
-            return source.hasPermissionLevel(3);
-        })).then(CommandManager.argument("targets", GameProfileArgumentType.gameProfile()).suggests((context, builder) -> {
+	public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+        dispatcher.register((CommandManager.literal("op").requires((source) ->
+            source.hasPermissionLevel(3)
+        )).then(CommandManager.argument("targets", GameProfileArgumentType.gameProfile()).suggests((context, builder) -> {
             PlayerManager playerManager = (context.getSource()).getServer().getPlayerManager();
-            return CommandSource.suggestMatching(playerManager.getPlayerList().stream().filter((player) -> {
-                return !playerManager.isOperator(player.getGameProfile());
-            }).map((player) -> {
-                return player.getGameProfile().getName();
-            }), builder);
-        }).executes((context) -> {
-            return op(context.getSource(), GameProfileArgumentType.getProfileArgument(context, "targets"));
-        })));
+            return CommandSource.suggestMatching(playerManager.getPlayerList().stream().filter((player) ->
+				!playerManager.isOperator(player.getGameProfile())
+            ).map((player) ->
+					player.getGameProfile().getName()
+            ), builder);
+        }).executes((context) ->
+			op(context.getSource(), GameProfileArgumentType.getProfileArgument(context, "targets"))
+        )));
     }
 
     private static int op(ServerCommandSource source, Collection<GameProfile> targets) throws CommandSyntaxException {
@@ -47,10 +43,9 @@ public class LanOpCommand {
             }
         }
 
-        if (i == 0) {
+        if (i == 0)
             throw ALREADY_OPPED_EXCEPTION.create();
-        } else {
+		else
             return i;
-        }
     }
 }
