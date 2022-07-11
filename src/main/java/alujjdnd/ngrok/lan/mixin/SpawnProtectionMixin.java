@@ -18,29 +18,30 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(MinecraftServer.class)
 public class SpawnProtectionMixin {
-
-    NLanConfig config = AutoConfig.getConfigHolder(NLanConfig.class).getConfig();
+    final NLanConfig config = AutoConfig.getConfigHolder(NLanConfig.class).getConfig();
 
     @Shadow
     private PlayerManager playerManager;
 
     @Inject(at = @At("HEAD"), method = "isSpawnProtected", cancellable = true)
     public void isSpawnProtected(ServerWorld world, BlockPos pos, PlayerEntity player, CallbackInfoReturnable<Boolean> cir) {
-
-        if(!NgrokLan.serverOpen){
+        if(!NgrokLan.serverOpen) {
             cir.setReturnValue(false);
             cir.cancel();
-        } else if (config.spawnProtectionRadius <= 0) {
+        }
+		else if (config.spawnProtectionRadius <= 0) {
             cir.setReturnValue(false);
             cir.cancel();
         }
         else if (world.getRegistryKey() != World.OVERWORLD) {
             cir.setReturnValue(false);
             cir.cancel();
-        } else if (playerManager.isOperator(player.getGameProfile())) {
+        }
+		else if (playerManager.isOperator(player.getGameProfile())) {
             cir.setReturnValue(false);
             cir.cancel();
-        } else {
+        }
+		else {
             BlockPos blockPos = world.getSpawnPos();
             int i = MathHelper.abs(pos.getX() - blockPos.getX());
             int j = MathHelper.abs(pos.getZ() - blockPos.getZ());
@@ -48,7 +49,7 @@ public class SpawnProtectionMixin {
             cir.setReturnValue(k <= config.spawnProtectionRadius);
             cir.cancel();
         }
-        //there's a small diff from vanilla check that checks if Oplist is empty. Since the host
+        //there's a small diff from vanilla check that checks if op list is empty. Since the host
         //is an "admin" (more control than op idk the technical term) by default they are not in
         //the op list, so this check does not work.
     }

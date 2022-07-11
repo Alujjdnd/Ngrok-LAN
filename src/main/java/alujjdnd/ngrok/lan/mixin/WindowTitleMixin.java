@@ -14,11 +14,7 @@ public abstract class WindowTitleMixin {
     private void injected(CallbackInfoReturnable<String> cir) {
         StringBuilder stringBuilder2 = new StringBuilder(I18n.translate("text.title.ngroklan.window"));
 
-        if(NgrokLan.serverOpen){
+        if(NgrokLan.serverOpen)
             cir.setReturnValue(stringBuilder2.toString());
-        }
-
-
     }
-
 }
