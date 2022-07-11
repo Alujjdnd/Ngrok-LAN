@@ -1,6 +1,5 @@
 package alujjdnd.ngrok.lan.mixin;
 
-
 import alujjdnd.ngrok.lan.NgrokLan;
 import net.minecraft.server.MinecraftServer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,12 +11,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class CloseTunnelMixin {
     @Inject(at = @At("TAIL"), method = "shutdown")
     private void afterShutdownServer(CallbackInfo info) {
-        if(NgrokLan.serverOpen){
+        if(NgrokLan.serverOpen) {
             NgrokLan.LOGGER.info("Closing Ngrok LAN!");
             NgrokLan.ngrokClient.kill();
             NgrokLan.serverOpen = false;
         }
-
     }
-
 }
