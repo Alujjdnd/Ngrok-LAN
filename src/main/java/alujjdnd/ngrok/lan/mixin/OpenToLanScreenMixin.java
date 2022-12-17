@@ -15,6 +15,7 @@ import net.minecraft.client.gui.screen.OpenToLanScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.util.NetworkUtils;
+import net.minecraft.screen.ScreenTexts;
 import net.minecraft.server.OperatorList;
 import net.minecraft.server.PlayerManager;
 import net.minecraft.server.ServerConfigHandler;
@@ -41,6 +42,9 @@ public class OpenToLanScreenMixin extends Screen {
     @Shadow
     private boolean allowCommands;
 
+    @Shadow
+    private int port;
+
     protected OpenToLanScreenMixin(Text title) {
         super(title);
     }
@@ -49,20 +53,19 @@ public class OpenToLanScreenMixin extends Screen {
     private void initWidgets(CallbackInfo info) {
 
         if (config.enabledCheckBox) { //if mod enabled in mod menu
-            this.addDrawableChild(new ButtonWidget(this.width / 2 - 155, this.height - 58, 150, 20, Text.translatable("text.UI.ngroklan.LanButton"), (button) -> {
-                int localPort = NetworkUtils.findLocalPort(); // part of the minecraft Networkutils class, finds an available local port (this was from the openToLan class)
+            this.addDrawableChild(ButtonWidget.builder(Text.translatable("text.UI.ngroklan.LanButton"), (button) -> {
+                //localport was removed since OpenToLanScreen.class contains a new port variable that is automatically updated, I am shadowing it
                 this.client.setScreen(null); // Removed all elements from the screen (this closes all menu windows)
                 switch (config.regionSelect) {
-                    case EU -> ngrokInit(localPort, Region.EU);
-                    case AP -> ngrokInit(localPort, Region.AP);
-                    case AU -> ngrokInit(localPort, Region.AU);
-                    case SA -> ngrokInit(localPort, Region.SA);
-                    case JP -> ngrokInit(localPort, Region.JP);
-                    case IN -> ngrokInit(localPort, Region.IN);
-                    default -> ngrokInit(localPort, Region.US); //US bundled here
+                    case EU -> ngrokInit(port, Region.EU);
+                    case AP -> ngrokInit(port, Region.AP);
+                    case AU -> ngrokInit(port, Region.AU);
+                    case SA -> ngrokInit(port, Region.SA);
+                    case JP -> ngrokInit(port, Region.JP);
+                    case IN -> ngrokInit(port, Region.IN);
+                    default -> ngrokInit(port, Region.US); //US bundled here
                 }
-            }));
-
+            }).dimensions(this.width / 2 - 155, this.height - 52, 150, 20).build());
         }
     }
 
