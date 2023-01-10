@@ -15,7 +15,7 @@
 </div>
 
 ## Help Needed!
-We are trying to port this mod to QuiltMC, to slowly move away from Fabric. If anyone is knowledgeable in porting mods to QuiltMC or in QuiltMC in general, please reach out! We would greatly appreciate your help!
+We are trying to port this mod to QuiltMC, many thanks to those who have contributed already! However, we are hope that a Quilt specific config library will become available to use soon, since our mod requires editing a config file we want the process to be as easy as possible for our users.
 
 ## Introduction
 Ngrok LAN is a Fabric mod that enables you to share your singleplayer world with your friends across the globe, all via
