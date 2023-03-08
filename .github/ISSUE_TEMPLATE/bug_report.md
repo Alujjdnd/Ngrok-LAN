@@ -28,5 +28,9 @@ If applicable, add screenshots to help explain your problem.
  - Minecraft Version [e.g. 1.18.2, Snapshot 22w13a]
  - Ngrok-LAN Version [e.g. Release 1.3.1]
 
+**Logs**
+Please provide a crash log or other Minecraft log, if you do not provide a log we will ask to see one.
+
+
 **Additional context**
 Add any other context about the problem here.
