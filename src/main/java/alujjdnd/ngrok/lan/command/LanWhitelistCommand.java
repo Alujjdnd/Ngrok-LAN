@@ -59,7 +59,7 @@ public class LanWhitelistCommand {
 
     private static int executeReload(ServerCommandSource source) {
         source.getServer().getPlayerManager().reloadWhitelist();
-        source.sendFeedback(Text.translatable("commands.whitelist.reloaded"), true);
+        source.sendFeedback(() -> Text.translatable("commands.whitelist.reloaded"), true);
         kickNonWhitelistedPlayers(source);
         return 1;
     }
@@ -72,7 +72,7 @@ public class LanWhitelistCommand {
             if (!whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.add(whitelistEntry);
-                source.sendFeedback(Text.translatable("commands.whitelist.add.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> Text.translatable("commands.whitelist.add.success", Texts.toText(gameProfile)), true);
                 ++i;
             }
         }
@@ -92,7 +92,7 @@ public class LanWhitelistCommand {
             if (whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.remove(whitelistEntry);
-                source.sendFeedback(Text.translatable("commands.whitelist.remove.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> Text.translatable("commands.whitelist.remove.success", Texts.toText(gameProfile)), true);
                 ++i;
             }
         }
@@ -111,7 +111,7 @@ public class LanWhitelistCommand {
             throw ALREADY_ON_EXCEPTION.create();
         } else {
             playerManager.setWhitelistEnabled(true);
-            source.sendFeedback(Text.translatable("commands.whitelist.enabled"), true);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.enabled"), true);
             kickNonWhitelistedPlayers(source);
             return 1;
         }
@@ -123,7 +123,7 @@ public class LanWhitelistCommand {
             throw ALREADY_OFF_EXCEPTION.create();
         } else {
             playerManager.setWhitelistEnabled(false);
-            source.sendFeedback(Text.translatable("commands.whitelist.disabled"), true);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.disabled"), true);
             return 1;
         }
     }
@@ -131,9 +131,9 @@ public class LanWhitelistCommand {
     private static int executeList(ServerCommandSource source) {
         String[] strings = source.getServer().getPlayerManager().getWhitelistedNames();
         if (strings.length == 0) {
-            source.sendFeedback(Text.translatable("commands.whitelist.none"), false);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.none"), false);
         } else {
-            source.sendFeedback(Text.translatable("commands.whitelist.list", strings.length, String.join(", ", strings)), false);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.list"), false);
         }
 
         return strings.length;

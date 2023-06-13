@@ -13,6 +13,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class LanOpCommand {
     private static final SimpleCommandExceptionType ALREADY_OPPED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.op.failed"));
@@ -43,7 +44,9 @@ public class LanOpCommand {
             if (!playerManager.isOperator(gameProfile)) {
                 playerManager.addToOperators(gameProfile);
                 ++i;
-                source.sendFeedback(Text.translatable("commands.op.success", targets.iterator().next().getName()), true);
+                source.sendFeedback(() -> {
+                    return Text.translatable("commands.op.success", new Object[]{((GameProfile) targets.iterator().next()).getName()});
+                }, true);
             }
         }
 

@@ -13,6 +13,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 public class LanDeopCommand {
     private static final SimpleCommandExceptionType ALREADY_DEOPPED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.deop.failed"));
@@ -38,7 +39,9 @@ public class LanDeopCommand {
             if (playerManager.isOperator(gameProfile)) {
                 playerManager.removeFromOperators(gameProfile);
                 ++i;
-                source.sendFeedback(Text.translatable("commands.deop.success", targets.iterator().next().getName()), true);
+                source.sendFeedback(() -> {
+                    return Text.translatable("commands.deop.success", new Object[]{((GameProfile) targets.iterator().next()).getName()});
+                }, true);
             }
         }
 
