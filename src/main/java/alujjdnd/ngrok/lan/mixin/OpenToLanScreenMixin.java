@@ -68,7 +68,7 @@ public class OpenToLanScreenMixin extends Screen {
 
     private void ngrokInit(int port, Region region) {
 
-        //Defines a new threaded function to oepn the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
+        //Defines a new threaded function to open the Ngrok tunnel, so that the "Open to LAN" button does not hitch - this thread runs in a seperate process from the main game loop
         Thread thread = new Thread(() ->
         {
             if (config.authToken.equals("AuthToken")) {
@@ -117,13 +117,12 @@ public class OpenToLanScreenMixin extends Screen {
                     MutableText textStart;
 
                     if (this.client.getServer().openToLan(this.gameMode, this.allowCommands, port)) {
-                        mc.getServer().setOnlineMode(config.onlineCheckBox);
+                        mc.getServer().setOnlineMode(config.onlineCheckBox); //online mode (player auth)
                         textStart = Text.translatable("commands.publish.started", port);
                         NgrokLan.serverOpen = true;
 
-                        //I made a new thread that reads the json files to update the oplist and whitelist in the playermanager
+                        //new thread that reads the json files to update the oplist and whitelist in the playermanager
                         Thread thread2 = new Thread(() -> {
-
 
                             boolean loaded = loadJson();
                             if(loaded){
