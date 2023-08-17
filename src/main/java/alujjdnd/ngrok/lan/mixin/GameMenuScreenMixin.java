@@ -41,7 +41,7 @@ public class GameMenuScreenMixin extends Screen {
     @Inject(method = "initWidgets", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/GridWidget;forEachChild(Ljava/util/function/Consumer;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void onInitWidgets(CallbackInfo ci, GridWidget gridWidget, GridWidget.Adder adder, Text text) {
 
-        if (config.enabledCheckBox) { //if ngrok server open
+        if (config.enabledCheckBox && NgrokLan.serverOpen) { //if ngrok server open
             if (gridWidget != null) {
                 final List<Widget> buttons = ((AccessorGridWidget) gridWidget).getChildren();
 
