@@ -8,7 +8,7 @@ import alujjdnd.ngrok.lan.command.ReloadJsonListsCommand;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,19 +19,15 @@ public class NgrokServerInitialiser implements DedicatedServerModInitializer
     public static final Logger LOGGER = LoggerFactory.getLogger(NgrokLan.MODID);
 
     @Override
-    // Initialize the differents parts of the mod when lauched on server
-    public void onInitializeServer()
-    {
+    public void onInitializeServer() {
+        
         LOGGER.info("World is Open to LAN with Ngrok LAN");
 
-        //register commands
-        CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
-        {
-            LanOpCommand.register(dispatcher);
-            LanDeopCommand.register(dispatcher);
-            LanWhitelistCommand.register(dispatcher);
-            ReloadJsonListsCommand.register(dispatcher);
-        });
+        // Initialize the differents parts of the mod when lauched on server
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> LanOpCommand.register(dispatcher)));
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> LanDeopCommand.register(dispatcher)));
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> LanWhitelistCommand.register(dispatcher)));
+        CommandRegistrationCallback.EVENT.register(((dispatcher, registryAccess, environment) -> ReloadJsonListsCommand.register(dispatcher)));
     }
 
 }

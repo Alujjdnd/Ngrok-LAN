@@ -1,5 +1,6 @@
 package alujjdnd.ngrok.lan.command;
 
+import com.google.common.collect.Lists;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
@@ -12,16 +13,19 @@ import net.minecraft.server.Whitelist;
 import net.minecraft.server.WhitelistEntry;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Texts;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 public class LanWhitelistCommand {
-    private static final SimpleCommandExceptionType ALREADY_ON_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.whitelist.alreadyOn"));
-    private static final SimpleCommandExceptionType ALREADY_OFF_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.whitelist.alreadyOff"));
-    private static final SimpleCommandExceptionType ADD_FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.whitelist.add.failed"));
-    private static final SimpleCommandExceptionType REMOVE_FAILED_EXCEPTION = new SimpleCommandExceptionType(new TranslatableText("commands.whitelist.remove.failed"));
+    private static final SimpleCommandExceptionType ALREADY_ON_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.whitelist.alreadyOn"));
+    private static final SimpleCommandExceptionType ALREADY_OFF_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.whitelist.alreadyOff"));
+    private static final SimpleCommandExceptionType ADD_FAILED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.whitelist.add.failed"));
+    private static final SimpleCommandExceptionType REMOVE_FAILED_EXCEPTION = new SimpleCommandExceptionType(Text.translatable("commands.whitelist.remove.failed"));
 
     public LanWhitelistCommand() {
     }
@@ -55,8 +59,8 @@ public class LanWhitelistCommand {
 
     private static int executeReload(ServerCommandSource source) {
         source.getServer().getPlayerManager().reloadWhitelist();
-        source.sendFeedback(new TranslatableText("commands.whitelist.reloaded"), true);
-        source.getServer().kickNonWhitelistedPlayers(source);
+        source.sendFeedback(() -> Text.translatable("commands.whitelist.reloaded"), true);
+        kickNonWhitelistedPlayers(source);
         return 1;
     }
 
@@ -68,7 +72,7 @@ public class LanWhitelistCommand {
             if (!whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.add(whitelistEntry);
-                source.sendFeedback(new TranslatableText("commands.whitelist.add.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> Text.translatable("commands.whitelist.add.success", Texts.toText(gameProfile)), true);
                 ++i;
             }
         }
@@ -88,7 +92,7 @@ public class LanWhitelistCommand {
             if (whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.remove(whitelistEntry);
-                source.sendFeedback(new TranslatableText("commands.whitelist.remove.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> Text.translatable("commands.whitelist.remove.success", Texts.toText(gameProfile)), true);
                 ++i;
             }
         }
@@ -96,7 +100,7 @@ public class LanWhitelistCommand {
         if (i == 0) {
             throw REMOVE_FAILED_EXCEPTION.create();
         } else {
-            source.getServer().kickNonWhitelistedPlayers(source);
+            kickNonWhitelistedPlayers(source);
             return i;
         }
     }
@@ -107,8 +111,8 @@ public class LanWhitelistCommand {
             throw ALREADY_ON_EXCEPTION.create();
         } else {
             playerManager.setWhitelistEnabled(true);
-            source.sendFeedback(new TranslatableText("commands.whitelist.enabled"), true);
-            source.getServer().kickNonWhitelistedPlayers(source);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.enabled"), true);
+            kickNonWhitelistedPlayers(source);
             return 1;
         }
     }
@@ -119,7 +123,7 @@ public class LanWhitelistCommand {
             throw ALREADY_OFF_EXCEPTION.create();
         } else {
             playerManager.setWhitelistEnabled(false);
-            source.sendFeedback(new TranslatableText("commands.whitelist.disabled"), true);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.disabled"), true);
             return 1;
         }
     }
@@ -127,11 +131,29 @@ public class LanWhitelistCommand {
     private static int executeList(ServerCommandSource source) {
         String[] strings = source.getServer().getPlayerManager().getWhitelistedNames();
         if (strings.length == 0) {
-            source.sendFeedback(new TranslatableText("commands.whitelist.none"), false);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.none"), false);
         } else {
-            source.sendFeedback(new TranslatableText("commands.whitelist.list", strings.length, String.join(", ", strings)), false);
+            source.sendFeedback(() -> Text.translatable("commands.whitelist.list"), false);
         }
 
         return strings.length;
+    }
+    private static void kickNonWhitelistedPlayers(ServerCommandSource source){
+        PlayerManager playerManager = source.getServer().getPlayerManager();
+        if (playerManager.isWhitelistEnabled()) {
+            Whitelist whitelist = playerManager.getWhitelist();
+            List<ServerPlayerEntity> list = Lists.newArrayList(playerManager.getPlayerList());
+
+            for (ServerPlayerEntity serverPlayerEntity : list) {
+                GameProfile profile = serverPlayerEntity.getGameProfile();
+                if(!source.getServer().isHost(profile)){
+                    if (!whitelist.isAllowed(profile) && !playerManager.isOperator(profile)) {
+                        serverPlayerEntity.networkHandler.disconnect(Text.translatable("multiplayer.disconnect.not_whitelisted"));
+                    }
+                }
+
+            }
+
+        }
     }
 }

@@ -72,7 +72,9 @@ public class LanWhitelistCommand {
             if (!whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.add(whitelistEntry);
-                source.sendFeedback(() -> Text.translatable("commands.whitelist.add.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> {
+                    return Text.translatable("commands.whitelist.add.success", new Object[]{Text.literal(gameProfile.getName())});
+                }, true);
                 ++i;
             }
         }
@@ -92,7 +94,9 @@ public class LanWhitelistCommand {
             if (whitelist.isAllowed(gameProfile)) {
                 WhitelistEntry whitelistEntry = new WhitelistEntry(gameProfile);
                 whitelist.remove(whitelistEntry);
-                source.sendFeedback(() -> Text.translatable("commands.whitelist.remove.success", Texts.toText(gameProfile)), true);
+                source.sendFeedback(() -> {
+                    return Text.translatable("commands.whitelist.remove.success", new Object[]{Text.literal(gameProfile.getName())});
+                }, true);
                 ++i;
             }
         }
@@ -100,7 +104,7 @@ public class LanWhitelistCommand {
         if (i == 0) {
             throw REMOVE_FAILED_EXCEPTION.create();
         } else {
-            kickNonWhitelistedPlayers(source);
+            source.getServer().kickNonWhitelistedPlayers(source);
             return i;
         }
     }

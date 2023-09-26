@@ -14,9 +14,6 @@ import alujjdnd.ngrok.lan.config.NLanConfig;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.JanksonConfigSerializer;
 
-
-
-
 public class NgrokLan implements ModInitializer {
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.

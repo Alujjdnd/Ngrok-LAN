@@ -6,7 +6,7 @@ import alujjdnd.ngrok.lan.command.LanWhitelistCommand;
 import alujjdnd.ngrok.lan.command.ReloadJsonListsCommand;
 import com.github.alexdlaird.ngrok.NgrokClient;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +40,7 @@ public class NgrokLan implements ModInitializer {
 		AutoConfig.register(NLanConfig.class, JanksonConfigSerializer::new);
 
 		//register commands
-		CommandRegistrationCallback.EVENT.register((dispatcher, dedicated) ->
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
 		{
 			LanOpCommand.register(dispatcher);
 			LanDeopCommand.register(dispatcher);
